@@ -35,10 +35,9 @@ const jsonLd = {
 <Base title={game.title} description={game.summary} image={game.hero} jsonLd={jsonLd}>
   <GameHero game={game} eyebrow={game.upcoming ? 'Coming Soon!' : 'Available Now!'} launchedEyebrow="Available Now!" tiles />
 
-  <!-- Pitch, then the trailer at full stage width -->
+  <!-- The trailer at full stage width (the hero above already says what the game is) -->
   <section class="section intro" style={`--accent: ${game.accent}`}>
     <div class="wrap stage">
-      {game.logline && <p class="logline">{game.logline}</p>}
       <div id="trailer">
         <Trailer id={game.youtube} title={game.title} poster={game.shots[0] ?? game.hero} />
       </div>
@@ -49,7 +48,7 @@ const jsonLd = {
   <section class="section shots-section">
     <div class="wrap">
       <div class="about">
-        <h2>About {game.title}</h2>
+        <h2>{game.logline ?? `About ${game.title}`}</h2>
         {game.description.map((p) => <p>{p}</p>)}
       </div>
       {game.shots.length > 0 && <Screenshots game={game} />}

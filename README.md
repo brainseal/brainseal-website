@@ -19,7 +19,9 @@ npm run build        # production build into dist/
    - `accent`: a highlight colour for that game's page
    - `publisher`: only needed when the publisher is not Brain Seal Entertainment
    - `description`: two short paragraphs about the game, shown on its page above the screenshots (and on the homepage while it is featured)
-   - `logline`: a one-line pitch shown in gold above the trailer on the game page (and above the screenshots on the homepage while the game is featured)
+   - `logline`: a one-line sell line, used as the heading above the description and screenshots on the game page (and in gold above the screenshots on the homepage while the game is featured)
+   - `heroTextBelow`: `true` when the painted logo fills the middle of the key art; the game page then shows the text below the art instead of over it
+   - `tagline` and `summary`: shown in the top section of the game's page, above the store buttons
    - `heroHasLogo`: `true` when the key art (`hero.jpg`) already has the logo painted in; the hero then keeps the art clear of text
    - `launchTime`: the UTC time the game unlocks on release day (e.g. `"18:00"`). When set, the homepage shows a live countdown.
    - `showcase`: `true` gives the game a full-screen band on the homepage under "Battles already won"

@@ -10,8 +10,9 @@ interface Props {
   eyebrow?: string;
   heading?: 'h1' | 'h2';
   link?: boolean;
-  // Gold platform tiles linking to every store instead of the red store buttons (game pages).
-  // Released games then drop the "Out now" line, since the eyebrow already says so.
+  // Game page mode: gold platform tiles linking to every store instead of the red store buttons,
+  // plus the tagline and summary even over painted-logo art. Released games drop the "Out now"
+  // line, since the eyebrow already says so.
   tiles?: boolean;
   // Eyebrow to switch to when the countdown reaches launch (e.g. "Coming Soon!" → "Available Now!").
   launchedEyebrow?: string;
@@ -32,7 +33,15 @@ const units = [
 ---
 
 <section
-  class:list={['hero', { 'art-logo': game.heroHasLogo, 'with-text': game.heroHasLogo && game.heroTagline, centered: tiles }]}
+  class:list={[
+    'hero',
+    {
+      'art-logo': game.heroHasLogo,
+      'with-text': game.heroHasLogo && tiles,
+      'text-below': game.heroHasLogo && tiles && game.heroTextBelow,
+      centered: tiles,
+    },
+  ]}
   style={`--accent: ${game.accent}`}
   data-launch={countdown ? game.releaseDate.toISOString() : undefined}>
   <Image
@@ -72,8 +81,8 @@ const units = [
       {
         game.heroHasLogo ? (
           <>
-            {game.heroTagline && <p class="tagline">{game.tagline}</p>}
-            {game.heroTagline && <p class="summary">{game.summary}</p>}
+            {tiles && <p class="tagline">{game.tagline}</p>}
+            {tiles && <p class="summary">{game.summary}</p>}
             {tiles ? <PlatformLinks game={game} /> : <StoreButtons game={game} primaryOnly />}
           </>
         ) : (
@@ -176,9 +185,30 @@ const units = [
   .art-logo::before {
     background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.88) 20%, rgb(11 9 8 / 0.4) 36%, transparent 50%);
   }
-  /* The tagline and summary make the block taller, so the shade reaches further up. */
+  /* The tagline and summary make the block taller, so the shade reaches further up and the
+     spacing tightens to keep it clear of logos painted low in the art (e.g. Dominus with its countdown). */
   .with-text::before {
     background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.92) 26%, rgb(11 9 8 / 0.6) 40%, transparent 58%);
+  }
+  .with-text {
+    padding-bottom: clamp(20px, 2.5vw, 32px);
+  }
+  .with-text .lead {
+    gap: 8px;
+  }
+  .with-text .lead > .summary {
+    max-width: 880px;
+    margin: 0;
+  }
+  .with-text .tagline {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+  }
+  .with-text .countdown div {
+    min-width: 66px;
+    padding: 8px 6px 6px;
+  }
+  .with-text .countdown span {
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
   }
   .art-logo {
     padding-bottom: clamp(32px, 4vw, 48px);
@@ -385,5 +415,27 @@ const units = [
     .art-logo .content {
       padding-top: 24px;
     }
+  }
+  /* Same "whole artwork, details underneath" layout at every size, for art whose logo fills the
+     middle of the picture (heroTextBelow in games.json), where overlaid text would cover it. */
+  .text-below {
+    display: block;
+    min-height: 0;
+    padding-top: 72px;
+  }
+  .text-below :global(.bg) {
+    position: relative;
+    top: auto;
+    z-index: auto;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-position: 50% 50%;
+    animation: none;
+  }
+  .text-below::before {
+    display: none;
+  }
+  .text-below .content {
+    padding-top: 24px;
   }
 </style>

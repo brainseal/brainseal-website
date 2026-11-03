@@ -52,9 +52,9 @@
     "steamAppId": 1309460,
     "released": "2025-02-18",
     "heroHasLogo": true,
-    "heroTagline": true,
     "genres": ["Physics", "Destruction", "Puzzle"],
     "tagline": "An epic journey of destruction.",
+    "logline": "A physics destruction game with light puzzle elements",
     "summary": "A physics destruction game. Unlock new bombs, explore the world and go on an epic journey of destruction.",
     "description": [
       "Blow it up is a physics destruction game with light puzzle elements: aim your bombs at the right spot and watch the towers your enemies hide behind come crashing down. Aliens have invaded BOOMTOPIA, stripped it of its resources and captured your friends one by one. Now it's time to fight back and rescue them.",
@@ -98,6 +98,7 @@
     "steamAppId": 2489010,
     "released": "2024-02-21",
     "heroHasLogo": true,
+    "heroTextBelow": true,
     "genres": ["Rogue-lite", "Auto shooter", "Survival"],
     "tagline": "Survive the grid for 20 minutes.",
     "logline": "A neon rogue-lite survival shooter",
