@@ -120,6 +120,7 @@
     "stores": {
       "steam": "https://store.steampowered.com/app/1185490/Dark_Quest_3/",
       "xbox": "https://www.xbox.com/en-US/games/store/dark-quest-3/9nhljf3ljnqb",
+      "playstation": "https://store.playstation.com/en-us/product/UP4140-CUSA42293_00-0750345372613197",
       "switch": "https://www.nintendo.com/us/store/products/dark-quest-3-switch/"
     }
   },
@@ -181,6 +182,7 @@
     "accent": "#3fa66b",
     "stores": {
       "steam": "https://store.steampowered.com/app/342860/Dark_Quest/",
+      "xbox": "https://www.xbox.com/en-US/games/store/dark-quest-remastered/9p5k2dsh41s8",
       "playstation": "https://store.playstation.com/en-us/concept/10018017",
       "switch": "https://www.nintendo.com/us/store/products/dark-quest-remastered-switch/"
     }
