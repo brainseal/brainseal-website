@@ -10,11 +10,11 @@ interface Props {
 
 const { game, row = false } = Astro.props;
 
-// The gallery always fills complete rows: 8 shows as 4×2; 6 or 7 as 3×2.
+// The gallery is 3 across and always fills complete rows: 9 shows as 3×3, 6-8 as 3×2.
 const count = game.shots.length;
-const columns = row || count % 4 === 0 || count < 6 ? 4 : 3;
-const shown = row ? 4 : count - (count % columns);
-const shots = game.shots.slice(0, Math.max(shown, Math.min(count, 4)));
+const columns = row ? 4 : 3;
+const shown = row ? 4 : count - (count % columns) || count;
+const shots = game.shots.slice(0, shown);
 const full = await Promise.all(shots.map((s) => getImage({ src: s, width: 1920 })));
 ---
 
@@ -25,7 +25,7 @@ const full = await Promise.all(shots.map((s) => getImage({ src: s, width: 1920 }
         <Image
           src={shot}
           alt={`${game.title} screenshot ${i + 1}`}
-          widths={[400, 640]}
+          widths={[400, 640, 800]}
           sizes={`(max-width: 700px) 50vw, ${Math.round(100 / columns)}vw`}
         />
       </a>
@@ -102,6 +102,10 @@ const full = await Promise.all(shots.map((s) => getImage({ src: s, width: 1920 }
     .shots {
       grid-template-columns: repeat(2, 1fr);
       gap: 8px;
+    }
+    /* 2 across: drop an odd last screenshot so the final row is full */
+    .shots a:last-child:nth-child(odd) {
+      display: none;
     }
   }
 </style>
