@@ -5,15 +5,9 @@ import GameCard from '../components/GameCard.astro';
 import Trailer from '../components/Trailer.astro';
 import Showcase from '../components/Showcase.astro';
 import Screenshots from '../components/Screenshots.astro';
+import Contacts from '../components/Contacts.astro';
 import { games, featured, studio, PLATFORMS } from '../lib/games';
 import { url } from '../lib/url';
-
-const years = new Date().getFullYear() - studio.founded;
-const stats = [
-  { value: games.length, label: 'Games forged' },
-  { value: studio.platforms, label: 'Platforms conquered' },
-  { value: years, label: 'Years in the arena' },
-];
 
 // Optional full-screen bands for games flagged `"showcase": true` in games.json (none right now).
 // The featured game is chapter I; showcased games follow in release order.
@@ -82,16 +76,10 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
         <p>Small studio. Big battles. Every game carries the seal.</p>
         <a class="btn" href={url('/about/')}>About the studio</a>
       </div>
-      <dl class="stats">
-        {
-          stats.map((s) => (
-            <div>
-              <dt>{s.label}</dt>
-              <dd>{s.value}</dd>
-            </div>
-          ))
-        }
-      </dl>
+      <div class="contact">
+        <h3>Send word to the studio</h3>
+        <Contacts />
+      </div>
     </div>
   </section>
 </Base>
@@ -172,39 +160,17 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
   .copy .btn {
     margin-top: 12px;
   }
-  .stats {
+  .contact {
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin: clamp(16px, 4vw, 40px) 0 0;
+    gap: 20px;
+    margin-top: clamp(16px, 4vw, 40px);
+    padding-top: clamp(24px, 3vw, 36px);
     border-top: 1px solid var(--line);
   }
-  .stats div {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 6px;
-    padding: 28px 16px 0 0;
-  }
-  .stats div + div {
-    padding-left: clamp(16px, 3vw, 40px);
-    border-left: 1px solid var(--line);
-  }
-  .stats dt {
-    color: var(--muted);
-    font-size: 0.8rem;
-    letter-spacing: 0.16em;
+  .contact h3 {
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
     text-transform: uppercase;
-  }
-  .stats dd {
-    margin: 0;
-    font-family: var(--display);
-    font-weight: 900;
-    font-size: clamp(2.6rem, 7vw, 5rem);
-    line-height: 1;
-    background: linear-gradient(180deg, var(--gold-hi), var(--gold));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
   }
   .grid-games {
     display: grid;
@@ -219,10 +185,6 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
   @media (max-width: 760px) {
     .grid {
       grid-template-columns: 1fr;
-    }
-    .stats dt {
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
     }
   }
 </style>

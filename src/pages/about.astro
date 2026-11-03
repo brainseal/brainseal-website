@@ -2,12 +2,8 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
+import Contacts from '../components/Contacts.astro';
 import { games, studio, PLATFORMS } from '../lib/games';
-
-const contacts = [
-  { label: 'Business & publishing', email: studio.email },
-  { label: 'Player support', email: studio.supportEmail },
-];
 ---
 
 <Base title="About" description="Brain Seal Entertainment is an independent video game developer and publisher from London, shipping games to Steam, Xbox, PlayStation and Nintendo Switch.">
@@ -47,16 +43,7 @@ const contacts = [
         <span class="eyebrow">Get in touch</span>
         <h2>Send word to the studio</h2>
       </div>
-      <ul class="contacts">
-        {
-          contacts.map((c) => (
-            <li>
-              <span>{c.label}</span>
-              <a href={`mailto:${c.email}`}>{c.email}</a>
-            </li>
-          ))
-        }
-      </ul>
+      <Contacts />
     </div>
   </section>
 </Base>
@@ -95,38 +82,6 @@ const contacts = [
   .contact {
     border-top: 1px solid var(--line);
     background: var(--ink-2);
-  }
-  .contacts {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .contacts li {
-    display: grid;
-    gap: 6px;
-    padding: 24px;
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--gold);
-    background: var(--ink);
-  }
-  .contacts span {
-    color: var(--muted);
-    font-size: 0.75rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-  .contacts a {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 1.1rem;
-    text-decoration: none;
-    overflow-wrap: anywhere;
-  }
-  .contacts a:hover {
-    color: var(--gold-hi);
   }
   @media (max-width: 800px) {
     .story {

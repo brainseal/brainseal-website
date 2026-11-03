@@ -1,0 +1,54 @@
+---
+import { studio } from '../lib/games';
+
+const contacts = [
+  { label: 'Business & publishing', email: studio.email },
+  { label: 'Player support', email: studio.supportEmail },
+];
+---
+
+<ul class="contacts">
+  {
+    contacts.map((c) => (
+      <li>
+        <span>{c.label}</span>
+        <a href={`mailto:${c.email}`}>{c.email}</a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .contacts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: grid;
+    gap: 6px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    background: var(--ink);
+  }
+  span {
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  a {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  a:hover {
+    color: var(--gold-hi);
+  }
+</style>
