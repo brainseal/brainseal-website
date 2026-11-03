@@ -32,7 +32,7 @@ const units = [
 ---
 
 <section
-  class:list={['hero', { 'art-logo': game.heroHasLogo }]}
+  class:list={['hero', { 'art-logo': game.heroHasLogo, centered: tiles }]}
   style={`--accent: ${game.accent}`}
   data-launch={countdown ? game.releaseDate.toISOString() : undefined}>
   <Image
@@ -203,6 +203,29 @@ const units = [
   .art-logo .lead :global(.platform-links) {
     justify-content: center;
     margin-top: 6px;
+  }
+  /* Game pages: the whole block is centred on the page. */
+  .centered .content,
+  .centered .lead,
+  .centered .actions {
+    justify-items: center;
+    text-align: center;
+  }
+  .centered :global(.platform-links) {
+    justify-content: center;
+  }
+  .centered .eyebrow::after {
+    content: '';
+    width: 2.2em;
+    height: 1px;
+    background: currentColor;
+  }
+  .centered .title :global(img) {
+    object-position: center;
+  }
+  /* Centred text sits over the middle of the art, so shade from the bottom rather than the left. */
+  .centered:not(.art-logo)::before {
+    background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.88) 30%, rgb(11 9 8 / 0.45) 60%, rgb(11 9 8 / 0.2) 100%);
   }
   .title {
     font-size: clamp(2.8rem, 8vw, 5.6rem);
