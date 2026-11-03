@@ -125,6 +125,7 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
   .manifesto {
     position: relative;
     overflow: hidden;
+    padding-block: clamp(48px, 6vw, 80px);
     border-block: 1px solid var(--line);
     background:
       radial-gradient(ellipse 50% 70% at 85% 50%, rgb(212 162 76 / 0.1), transparent 70%),
@@ -177,6 +178,9 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
   .copy {
     color: #d8cfc1;
     text-align: center;
+  }
+  .copy :global(p:last-child) {
+    margin-bottom: 0;
   }
   .grid-games {
     display: grid;
