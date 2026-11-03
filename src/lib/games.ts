@@ -25,7 +25,7 @@ export const games = data
       launchTime?: string;
       showcase?: boolean;
       heroHasLogo?: boolean;
-      heroTextBelow?: boolean;
+      heroArtBottom?: boolean;
       logline?: string;
     };
     // launchTime is the UTC unlock time on release day, when known; it drives the countdown.
@@ -39,8 +39,8 @@ export const games = data
       logline: extra.logline,
       // The key art already has the game's logo painted in, so the hero keeps it clear of text.
       heroHasLogo: extra.heroHasLogo ?? false,
-      // The painted logo fills the middle of the art, so the game page shows the text below the art.
-      heroTextBelow: extra.heroTextBelow ?? false,
+      // The painted logo sits low in the art and the top is empty, so wide screens crop from the top.
+      heroArtBottom: extra.heroArtBottom ?? false,
       hasLaunchTime: !!extra.launchTime,
       releaseDate,
       upcoming: releaseDate > now,

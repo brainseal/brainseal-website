@@ -20,7 +20,7 @@ npm run build        # production build into dist/
    - `publisher`: only needed when the publisher is not Brain Seal Entertainment
    - `description`: two short paragraphs about the game, shown on its page above the screenshots (and on the homepage while it is featured)
    - `logline`: a one-line sell line, used as the heading above the description and screenshots on the game page (and in gold above the screenshots on the homepage while the game is featured)
-   - `heroTextBelow`: `true` when the painted logo fills the middle of the key art; the game page then shows the text below the art instead of over it
+   - `heroArtBottom`: `true` when the painted logo sits low in the key art with empty space above it; wide screens then crop the extra height from the top, lifting the logo clear of the text
    - `tagline` and `summary`: shown in the top section of the game's page, above the store buttons
    - `heroHasLogo`: `true` when the key art (`hero.jpg`) already has the logo painted in; the hero then keeps the art clear of text
    - `launchTime`: the UTC time the game unlocks on release day (e.g. `"18:00"`). When set, the homepage shows a live countdown.

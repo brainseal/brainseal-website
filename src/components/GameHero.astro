@@ -38,7 +38,7 @@ const units = [
     {
       'art-logo': game.heroHasLogo,
       'with-text': game.heroHasLogo && tiles,
-      'text-below': game.heroHasLogo && tiles && game.heroTextBelow,
+      'art-bottom': game.heroHasLogo && game.heroArtBottom,
       centered: tiles,
     },
   ]}
@@ -181,6 +181,11 @@ const units = [
     object-position: 50% 0%;
     /* Anchor the slow zoom-in to the top edge so it never pushes the art back under the bar. */
     transform-origin: 50% 0;
+  }
+  /* Art whose logo sits low with empty sky above (heroArtBottom): crop any extra height from the top
+     instead, lifting the logo clear of the text. */
+  .art-bottom :global(.bg) {
+    object-position: 50% 100%;
   }
   .art-logo::before {
     background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.88) 20%, rgb(11 9 8 / 0.4) 36%, transparent 50%);
@@ -415,27 +420,5 @@ const units = [
     .art-logo .content {
       padding-top: 24px;
     }
-  }
-  /* Same "whole artwork, details underneath" layout at every size, for art whose logo fills the
-     middle of the picture (heroTextBelow in games.json), where overlaid text would cover it. */
-  .text-below {
-    display: block;
-    min-height: 0;
-    padding-top: 72px;
-  }
-  .text-below :global(.bg) {
-    position: relative;
-    top: auto;
-    z-index: auto;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-position: 50% 50%;
-    animation: none;
-  }
-  .text-below::before {
-    display: none;
-  }
-  .text-below .content {
-    padding-top: 24px;
   }
 </style>
