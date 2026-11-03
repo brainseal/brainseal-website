@@ -207,5 +207,22 @@
       "playstation": "https://store.playstation.com/en-us/concept/10018017",
       "switch": "https://www.nintendo.com/us/store/products/dark-quest-remastered-switch/"
     }
+  },
+  {
+    "slug": "masters-of-belial",
+    "title": "Masters of Belial",
+    "released": "2007-11",
+    "genres": ["Action RPG", "Arena", "Multiplayer"],
+    "tagline": "Where the legend of Brain Seal began.",
+    "logline": "The arena action RPG that started it all",
+    "summary": "An arena action RPG inspired by Diablo and Defense of the Ancients, and the very first Brain Seal game.",
+    "description": [
+      "Masters of Belial is an arena action RPG inspired by Diablo and Defense of the Ancients. Choose from 12 heroes, master 60 spells and over 40 items, and battle in online team matches or with a friend in two-player co-op on the same screen.",
+      "Released on PC in 2007 and on Xbox Live Indie Games in 2010, it was one of the first games of its kind on consoles, with music by Nox Arcana. Built almost single-handedly by Argi Baltzi, it is where Brain Seal began."
+    ],
+    "youtube": "kF6JV9qPJpA",
+    "accent": "#b3191f",
+    "formerPlatforms": ["PC", "Xbox Live Indie Games"],
+    "stores": {}
   }
 ]

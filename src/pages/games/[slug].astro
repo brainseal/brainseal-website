@@ -15,7 +15,7 @@ interface Props {
 }
 
 const { game } = Astro.props;
-const platforms = platformsOf(game).map((p) => PLATFORMS[p]);
+const platforms = game.formerPlatforms ?? platformsOf(game).map((p) => PLATFORMS[p]);
 const others = games.filter((g) => g.slug !== game.slug).slice(0, 4);
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -33,7 +33,12 @@ const jsonLd = {
 ---
 
 <Base title={game.title} description={game.summary} image={game.hero} jsonLd={jsonLd}>
-  <GameHero game={game} eyebrow={game.upcoming ? 'Coming Soon!' : 'Available Now!'} launchedEyebrow="Available Now!" tiles />
+  <GameHero
+    game={game}
+    eyebrow={game.upcoming ? 'Coming Soon!' : game.inStores ? 'Available Now!' : `Released ${game.releasedLabel}`}
+    launchedEyebrow="Available Now!"
+    tiles
+  />
 
   <!-- The trailer at full stage width (the hero above already says what the game is) -->
   <section class="section intro" style={`--accent: ${game.accent}`}>

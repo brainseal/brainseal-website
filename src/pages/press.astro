@@ -11,7 +11,7 @@ const facts = [
   { label: 'Company', value: studio.legalName },
   { label: 'Based in', value: studio.location },
   { label: 'Founded', value: `${studio.founded}` },
-  { label: 'First release', value: `Dark Quest, ${studio.firstRelease}` },
+  { label: 'First release', value: `${studio.firstGame.title}, ${studio.firstGame.year}` },
   { label: 'Games', value: `${games.length}` },
   { label: 'Platforms', value: Object.values(PLATFORMS).join(', ') },
   ...(totalReviews > 0 ? [{ label: 'Steam reviews', value: totalReviews.toLocaleString('en-GB') }] : []),
@@ -38,8 +38,8 @@ const downloads = (game: (typeof games)[number]) => [
       <div>
         <h2>The studio</h2>
         <p>
-          {studio.name} is an independent video game developer and publisher based in London. Since the first Dark Quest
-          in {studio.firstRelease}, the studio has released {games.filter((g) => !g.upcoming).length} games across
+          {studio.name} is an independent video game developer and publisher based in London.{' '}
+          {`Since ${studio.firstGame.title} in ${studio.firstGame.year}`}, the studio has released {games.filter((g) => !g.upcoming).length} games across
           {' '}{Object.values(PLATFORMS).slice(0, -1).join(', ')} and {Object.values(PLATFORMS).at(-1)}, from the HeroQuest-inspired Dark
           Quest saga to gladiator epics, strategy and physics games.
         </p>
@@ -81,8 +81,8 @@ const downloads = (game: (typeof games)[number]) => [
                   <a href={url(`/games/${game.slug}/`)}>{game.title}</a>
                 </h3>
                 <p>
-                  {game.upcoming ? 'Launches' : 'Released'} {formatDate(game.releaseDate)} ·{' '}
-                  {platformsOf(game).map((p) => PLATFORMS[p]).join(', ')}
+                  {game.upcoming ? `Launches ${formatDate(game.releaseDate)}` : `Released ${game.releasedLabel}`} ·{' '}
+                  {(game.formerPlatforms ?? platformsOf(game).map((p) => PLATFORMS[p])).join(', ')}
                 </p>
                 <p class="genres">{game.genres.join(' · ')}</p>
                 <ul class="files">
@@ -104,9 +104,11 @@ const downloads = (game: (typeof games)[number]) => [
                   <li>
                     <a href={`https://www.youtube.com/watch?v=${game.youtube}`} rel="noopener">Trailer</a>
                   </li>
-                  <li>
-                    <a href={game.stores.steam} rel="noopener">Steam page</a>
-                  </li>
+                  {game.stores.steam && (
+                    <li>
+                      <a href={game.stores.steam} rel="noopener">Steam page</a>
+                    </li>
+                  )}
                 </ul>
               </div>
             </li>

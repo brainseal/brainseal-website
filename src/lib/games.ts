@@ -10,10 +10,14 @@ export const PLATFORMS = {
 } as const;
 export type Platform = keyof typeof PLATFORMS;
 
+export function formatDate(date: Date) {
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+
 const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/games/*/*.{jpg,png}', { eager: true });
 const art = (slug: string, name: string) => files[`/src/assets/games/${slug}/${name}`]?.default;
 
-const reviews = await fetchReviews(data.map((g) => g.steamAppId));
+const reviews = await fetchReviews(data.map((g) => g.steamAppId).filter((id): id is number => !!id));
 
 // Release status is decided at build time; the deploy workflow rebuilds daily so launches flip on their own.
 const now = new Date();
@@ -27,9 +31,12 @@ export const games = data
       heroHasLogo?: boolean;
       heroArtBottom?: boolean;
       logline?: string;
+      formerPlatforms?: string[];
     };
+    // "released" is a full date, or just "YYYY-MM" when only the month is known (older games).
     // launchTime is the UTC unlock time on release day, when known; it drives the countdown.
-    const releaseDate = new Date(`${game.released}T${extra.launchTime ?? '00:00'}:00Z`);
+    const monthOnly = /^\d{4}-\d{2}$/.test(game.released);
+    const releaseDate = new Date(`${game.released}${monthOnly ? '-01' : ''}T${extra.launchTime ?? '00:00'}:00Z`);
     return {
       ...game,
       stores: game.stores as Partial<Record<Platform, string>>,
@@ -43,6 +50,13 @@ export const games = data
       heroArtBottom: extra.heroArtBottom ?? false,
       hasLaunchTime: !!extra.launchTime,
       releaseDate,
+      releasedLabel: monthOnly
+        ? releaseDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+        : formatDate(releaseDate),
+      // False for games that are no longer sold anywhere (no store links at all);
+      // formerPlatforms then says where they were released, e.g. "Xbox Live Indie Games".
+      inStores: Object.values(game.stores).some(Boolean),
+      formerPlatforms: extra.formerPlatforms,
       upcoming: releaseDate > now,
       year: releaseDate.getUTCFullYear(),
       hero: art(game.slug, 'hero.jpg')!,
@@ -62,9 +76,6 @@ export const featured = games[0];
 export const platformsOf = (game: Game) =>
   (Object.keys(PLATFORMS) as Platform[]).filter((p) => p in game.stores);
 
-export const formatDate = (date: Date) =>
-  date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
-
 export const totalReviews = Object.values(reviews).reduce((sum, r) => sum + r.count, 0);
 
 export const studio = {
@@ -72,7 +83,8 @@ export const studio = {
   legalName: 'Brain Seal Ltd',
   location: 'London, United Kingdom',
   founded: 2007,
-  firstRelease: Math.min(...games.map((g) => g.year)),
+  // The oldest game (games are sorted newest first).
+  firstGame: games[games.length - 1],
   platforms: new Set(games.flatMap(platformsOf)).size,
   email: 'info@brainseal.com',
   supportEmail: 'support@brainseal.com',

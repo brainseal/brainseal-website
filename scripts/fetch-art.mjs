@@ -23,6 +23,11 @@ async function download(urls, dest) {
 }
 
 for (const game of games) {
+  // Games no longer on Steam (e.g. Masters of Belial) keep hand-made art in their folder.
+  if (!game.steamAppId) {
+    console.log(`${game.slug.padEnd(22)} not on Steam, art kept as is`);
+    continue;
+  }
   const dir = new URL(`../src/assets/games/${game.slug}/`, import.meta.url);
   await mkdir(dir, { recursive: true });
 
