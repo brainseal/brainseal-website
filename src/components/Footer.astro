@@ -18,10 +18,6 @@ const year = new Date().getFullYear();
         enquiries.
       </p>
       <div class="btn-row center">
-        <a class="btn btn-discord" href={studio.discord} rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.discord}></path></svg>
-          Join our Discord
-        </a>
         <a class="btn btn-gold" href={`mailto:${studio.email}`}>{studio.email}</a>
       </div>
       <ul class="socials" aria-label={`Follow ${studio.name}`}>
@@ -84,23 +80,6 @@ const year = new Date().getFullYear();
   .center .btn {
     text-transform: none;
     letter-spacing: 0.06em;
-  }
-  /* Discord's own brand colour, so the button reads as Discord at a glance */
-  .btn-discord {
-    --btn-bg: #5865f2;
-    --btn-fg: #fff;
-    --btn-line: #5865f2;
-    box-shadow: 0 10px 30px -10px rgb(88 101 242 / 0.6);
-  }
-  .btn-discord:hover {
-    color: #fff;
-    border-color: #8891f7;
-    filter: brightness(1.08);
-  }
-  .btn-discord svg {
-    width: 1.35em;
-    height: 1.35em;
-    fill: currentColor;
   }
   .socials {
     display: flex;
