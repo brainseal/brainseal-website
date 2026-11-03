@@ -4,8 +4,7 @@ import GameHero from '../../components/GameHero.astro';
 import GameCard from '../../components/GameCard.astro';
 import Trailer from '../../components/Trailer.astro';
 import Screenshots from '../../components/Screenshots.astro';
-import PlatformLinks from '../../components/PlatformLinks.astro';
-import { games, formatDate, PLATFORMS, platformsOf, studio, type Game } from '../../lib/games';
+import { games, PLATFORMS, platformsOf, studio, type Game } from '../../lib/games';
 import { url } from '../../lib/url';
 
 export function getStaticPaths() {
@@ -19,15 +18,6 @@ interface Props {
 const { game } = Astro.props;
 const platforms = platformsOf(game).map((p) => PLATFORMS[p]);
 const others = games.filter((g) => g.slug !== game.slug).slice(0, 4);
-
-const facts = [
-  { label: game.upcoming ? 'Release date' : 'Released', value: formatDate(game.releaseDate) },
-  { label: 'Genre', value: game.genres.join(', ') },
-  { label: 'Platforms', value: platforms.join(', ') },
-  { label: 'Developer', value: studio.name },
-  { label: 'Publisher', value: game.publisher ?? studio.name },
-  ...(game.review ? [{ label: 'Steam reviews', value: `${game.review.label} · ${game.review.percent}% of ${game.review.count.toLocaleString('en-GB')}` }] : []),
-];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -45,34 +35,18 @@ const jsonLd = {
 ---
 
 <Base title={game.title} description={game.summary} image={game.hero} jsonLd={jsonLd}>
-  <GameHero game={game} eyebrow="A Brain Seal Entertainment game" />
+  <GameHero game={game} eyebrow={game.upcoming ? 'Coming Soon!' : 'Available Now!'} launchedEyebrow="Available Now!" tiles />
 
   <section class="section body" style={`--accent: ${game.accent}`}>
     <div class="wrap layout">
-      <div class="main">
-        <div id="trailer">
-          <Trailer id={game.youtube} title={game.title} poster={game.shots[0] ?? game.hero} />
-        </div>
-        <div class="about">
-          <span class="eyebrow">The game</span>
-          {game.heroHasLogo && <p>{game.summary}</p>}
-          {game.description.map((p) => <p>{p}</p>)}
-          {/* The logo-art hero only carries the main store button, so list every platform here. */}
-          {game.heroHasLogo && <div class="platforms"><PlatformLinks game={game} /></div>}
-        </div>
+      <div id="trailer">
+        <Trailer id={game.youtube} title={game.title} poster={game.shots[0] ?? game.hero} />
       </div>
-      <aside class="facts">
-        <dl>
-          {
-            facts.map((f) => (
-              <div>
-                <dt>{f.label}</dt>
-                <dd>{f.value}</dd>
-              </div>
-            ))
-          }
-        </dl>
-      </aside>
+      <div class="about">
+        <span class="eyebrow">The game</span>
+        {game.heroHasLogo && <p>{game.summary}</p>}
+        {game.description.map((p) => <p>{p}</p>)}
+      </div>
     </div>
   </section>
 
@@ -105,15 +79,12 @@ const jsonLd = {
   .body {
     padding-top: 0;
   }
+  /* Trailer beside the description, as in the homepage's featured section. */
   .layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 340px;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
     gap: clamp(24px, 4vw, 56px);
-    align-items: start;
-  }
-  .main {
-    display: grid;
-    gap: clamp(32px, 5vw, 56px);
+    align-items: center;
   }
   .about {
     display: grid;
@@ -123,37 +94,6 @@ const jsonLd = {
   }
   .about .eyebrow {
     margin-bottom: 12px;
-  }
-  .about .platforms {
-    margin-top: 12px;
-  }
-  .facts {
-    position: sticky;
-    top: 96px;
-    display: grid;
-    gap: 24px;
-  }
-  dl {
-    margin: 0;
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--accent);
-    background: var(--ink-2);
-  }
-  dl div {
-    padding: 14px 20px;
-  }
-  dl div + div {
-    border-top: 1px solid var(--line);
-  }
-  dt {
-    color: var(--muted);
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-  dd {
-    margin: 2px 0 0;
-    font-weight: 600;
   }
   .shots-section {
     border-top: 1px solid var(--line);
@@ -167,9 +107,6 @@ const jsonLd = {
   @media (max-width: 960px) {
     .layout {
       grid-template-columns: 1fr;
-    }
-    .facts {
-      position: static;
     }
     .more-grid {
       grid-template-columns: repeat(2, 1fr);

@@ -1,5 +1,5 @@
-// Steam review summaries, fetched once per build. The nightly rebuild keeps them current.
-// If Steam can't be reached the site still builds, just without review badges.
+// Steam review summaries, fetched once per build for the press kit's review count. The nightly
+// rebuild keeps them current. If Steam can't be reached the site still builds, just without the count.
 
 export interface Review {
   score: number; // Steam's 1–9 scale; 6 = Mostly Positive, 8 = Very Positive
@@ -7,9 +7,6 @@ export interface Review {
   percent: number;
   count: number;
 }
-
-// Below this, badges stay off the page (Mixed and worse).
-export const MIN_BADGE_SCORE = 6;
 
 export async function fetchReviews(appIds: number[]): Promise<Record<number, Review>> {
   const input = {

@@ -1,6 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import data from '../data/games.json';
-import { fetchReviews, MIN_BADGE_SCORE } from './steam';
+import { fetchReviews } from './steam';
 
 export const PLATFORMS = {
   steam: 'Steam',
@@ -29,7 +29,6 @@ export const games = data
     };
     // launchTime is the UTC unlock time on release day, when known; it drives the countdown.
     const releaseDate = new Date(`${game.released}T${extra.launchTime ?? '00:00'}:00Z`);
-    const review = reviews[game.steamAppId];
     return {
       ...game,
       stores: game.stores as Partial<Record<Platform, string>>,
@@ -43,8 +42,6 @@ export const games = data
       releaseDate,
       upcoming: releaseDate > now,
       year: releaseDate.getUTCFullYear(),
-      // Only reviews worth bragging about get a badge.
-      review: review && review.score >= MIN_BADGE_SCORE ? review : undefined,
       hero: art(game.slug, 'hero.jpg')!,
       cover: art(game.slug, 'cover.jpg')!,
       logo: art(game.slug, 'logo.png'),

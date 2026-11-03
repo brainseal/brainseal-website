@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import StoreButtons from './StoreButtons.astro';
+import PlatformLinks from './PlatformLinks.astro';
 import { formatDate, type Game } from '../lib/games';
 import { url } from '../lib/url';
 
@@ -9,9 +10,15 @@ interface Props {
   eyebrow?: string;
   heading?: 'h1' | 'h2';
   link?: boolean;
+  // Gold platform tiles linking to every store instead of the red store buttons (game pages).
+  // Released games then drop the "Out now" line, since the eyebrow already says so.
+  tiles?: boolean;
+  // Eyebrow to switch to when the countdown reaches launch (e.g. "Coming Soon!" → "Available Now!").
+  launchedEyebrow?: string;
 }
 
-const { game, eyebrow, heading: Heading = 'h1', link = false } = Astro.props;
+const { game, eyebrow, heading: Heading = 'h1', link = false, tiles = false, launchedEyebrow } = Astro.props;
+const showStatus = game.upcoming || !tiles;
 const status = game.upcoming
   ? `Launches ${formatDate(game.releaseDate)}`
   : `Out now · Released ${game.year}`;
@@ -39,7 +46,7 @@ const units = [
   />
   <div class="wrap content">
     <div class="lead">
-      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      {eyebrow && <span class="eyebrow" data-launched-eyebrow={launchedEyebrow}>{eyebrow}</span>}
       <Heading class:list={['title', { 'visually-hidden': game.heroHasLogo }]}>
         {
           game.logo && !game.heroHasLogo ? (
@@ -49,7 +56,7 @@ const units = [
           )
         }
       </Heading>
-      <p class="status"><span class="dot"></span><span data-status>{status}</span></p>
+      {showStatus && <p class="status"><span class="dot"></span><span data-status>{status}</span></p>}
       {
         countdown && (
           <div class="countdown" data-countdown hidden>
@@ -64,7 +71,7 @@ const units = [
       }
       {
         game.heroHasLogo ? (
-          <StoreButtons game={game} primaryOnly />
+          tiles ? <PlatformLinks game={game} /> : <StoreButtons game={game} primaryOnly />
         ) : (
           <>
             <p class="tagline">{game.tagline}</p>
@@ -76,7 +83,7 @@ const units = [
     {
       (!game.heroHasLogo || link) && (
         <div class="actions">
-          {!game.heroHasLogo && <StoreButtons game={game} />}
+          {!game.heroHasLogo && (tiles ? <PlatformLinks game={game} /> : <StoreButtons game={game} />)}
           {link && <a class="more" href={url(`/games/${game.slug}/`)}>Enter the arena →</a>}
         </div>
       )
@@ -100,6 +107,7 @@ const units = [
         box.hidden = true;
         hero.querySelector('[data-status]')!.textContent = 'Out now';
         hero.querySelectorAll('[data-wishlist]').forEach((a) => (a.textContent = 'Buy on Steam'));
+        hero.querySelectorAll<HTMLElement>('[data-launched-eyebrow]').forEach((e) => (e.textContent = e.dataset.launchedEyebrow!));
         return;
       }
       const s = Math.floor(left / 1000);
@@ -191,6 +199,10 @@ const units = [
     width: min(100%, 344px);
     min-height: 58px;
     font-size: 1rem;
+  }
+  .art-logo .lead :global(.platform-links) {
+    justify-content: center;
+    margin-top: 6px;
   }
   .title {
     font-size: clamp(2.8rem, 8vw, 5.6rem);
