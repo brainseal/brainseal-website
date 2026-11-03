@@ -96,6 +96,7 @@
     "title": "Geometry Survivor",
     "steamAppId": 2489010,
     "released": "2024-02-21",
+    "heroHasLogo": true,
     "genres": ["Rogue-lite", "Auto shooter", "Survival"],
     "tagline": "Survive the grid for 20 minutes.",
     "logline": "A neon rogue-lite survival shooter",
