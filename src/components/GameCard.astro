@@ -8,9 +8,14 @@ interface Props {
 }
 
 const { game } = Astro.props;
+// Ghost games have no page yet, so their card is a plain, dimmed tile instead of a link.
+const Card = game.ghost ? 'div' : 'a';
 ---
 
-<a class="card" href={url(`/games/${game.slug}/`)} style={`--accent: ${game.accent}`}>
+<Card
+  class:list={['card', { ghost: game.ghost }]}
+  href={game.ghost ? undefined : url(`/games/${game.slug}/`)}
+  style={`--accent: ${game.accent}`}>
   <div class="art">
     <Image src={game.cover} alt={`${game.title} cover art`} widths={[300, 450, 600]} sizes="(max-width: 600px) 50vw, 300px" />
     {game.upcoming && <span class="ribbon">Coming soon</span>}
@@ -28,7 +33,7 @@ const { game } = Astro.props;
       }
     </ul>
   </div>
-</a>
+</Card>
 
 <style>
   .card {
@@ -50,6 +55,16 @@ const { game } = Astro.props;
     object-fit: cover;
     transition: transform 0.6s;
   }
+  /* Ghost: a faded, greyed tile that can't be clicked */
+  .ghost {
+    cursor: default;
+  }
+  .ghost .art :global(img) {
+    filter: grayscale(0.85) brightness(0.55);
+  }
+  .ghost .meta {
+    opacity: 0.5;
+  }
   .art::after {
     content: '';
     position: absolute;
@@ -58,15 +73,15 @@ const { game } = Astro.props;
     opacity: 0;
     transition: opacity 0.35s;
   }
-  .card:hover .art {
+  a.card:hover .art {
     transform: translateY(-6px);
     border-color: var(--accent);
     box-shadow: 0 24px 50px -20px var(--accent);
   }
-  .card:hover .art :global(img) {
+  a.card:hover .art :global(img) {
     transform: scale(1.05);
   }
-  .card:hover .art::after {
+  a.card:hover .art::after {
     opacity: 1;
   }
   .ribbon {
@@ -89,7 +104,7 @@ const { game } = Astro.props;
     text-transform: uppercase;
     transition: color 0.25s;
   }
-  .card:hover h3 {
+  a.card:hover h3 {
     color: var(--gold-hi);
   }
   .meta p {
@@ -117,7 +132,7 @@ const { game } = Astro.props;
     font-size: 15px;
     transition: color 0.25s, border-color 0.25s;
   }
-  .card:hover .platforms li {
+  a.card:hover .platforms li {
     color: var(--gold-hi);
     border-color: rgb(212 162 76 / 0.4);
   }

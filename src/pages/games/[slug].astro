@@ -4,10 +4,12 @@ import GameHero from '../../components/GameHero.astro';
 import GameCard from '../../components/GameCard.astro';
 import Trailer from '../../components/Trailer.astro';
 import Screenshots from '../../components/Screenshots.astro';
-import { games, PLATFORMS, platformsOf, studio, type Game } from '../../lib/games';import { url } from '../../lib/url';
+import { games, PLATFORMS, platformsOf, studio, type Game } from '../../lib/games';
+import { url } from '../../lib/url';
 
+// Ghost games (shown as dimmed cards) don't get a page yet.
 export function getStaticPaths() {
-  return games.map((game) => ({ params: { slug: game.slug }, props: { game } }));
+  return games.filter((game) => !game.ghost).map((game) => ({ params: { slug: game.slug }, props: { game } }));
 }
 
 interface Props {
@@ -16,7 +18,7 @@ interface Props {
 
 const { game } = Astro.props;
 const platforms = game.formerPlatforms ?? platformsOf(game).map((p) => PLATFORMS[p]);
-const others = games.filter((g) => g.slug !== game.slug).slice(0, 4);
+const others = games.filter((g) => g.slug !== game.slug && !g.ghost).slice(0, 4);
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'VideoGame',
