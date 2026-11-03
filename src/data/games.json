@@ -166,6 +166,7 @@
     "title": "Dark Quest 2",
     "steamAppId": 453690,
     "released": "2018-03-06",
+    "heroHasLogo": true,
     "genres": ["RPG", "Turn-based", "Dungeon crawler"],
     "tagline": "Into the Castle of Doom.",
     "logline": "A dice-driven dungeon RPG inspired by HeroQuest",
