@@ -49,8 +49,10 @@ export type Game = (typeof games)[number];
 
 export const featured = games[0];
 
+// Every platform the game is on or announced for. A store set to "" in games.json means
+// announced but no store page yet: it is listed, but gets no link or store button.
 export const platformsOf = (game: Game) =>
-  (Object.keys(PLATFORMS) as Platform[]).filter((p) => game.stores[p]);
+  (Object.keys(PLATFORMS) as Platform[]).filter((p) => p in game.stores);
 
 export const formatDate = (date: Date) =>
   date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });

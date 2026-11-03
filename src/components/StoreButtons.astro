@@ -8,7 +8,9 @@ interface Props {
 }
 
 const { game, primaryOnly = false } = Astro.props;
-const platforms = platformsOf(game).slice(0, primaryOnly ? 1 : undefined);
+const platforms = platformsOf(game)
+  .filter((p) => game.stores[p])
+  .slice(0, primaryOnly ? 1 : undefined);
 ---
 
 <div class="btn-row">

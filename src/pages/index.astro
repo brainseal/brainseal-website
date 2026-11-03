@@ -29,15 +29,21 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
       </div>
       {featured.shots.length > 0 && <Screenshots game={featured} row />}
       <div class="platform-links">
-        <span class="eyebrow">{featured.upcoming ? 'Coming to' : 'Available on'}</span>
         <ul>
           {
             platformsOf(featured).map((p) => (
               <li>
-                <a href={featured.stores[p]} rel="noopener">
-                  <PlatformIcon platform={p} decorative />
-                  <span>{PLATFORMS[p]}</span>
-                </a>
+                {featured.stores[p] ? (
+                  <a href={featured.stores[p]} rel="noopener">
+                    <PlatformIcon platform={p} decorative />
+                    <span>{PLATFORMS[p]}</span>
+                  </a>
+                ) : (
+                  <span class="unlinked">
+                    <PlatformIcon platform={p} decorative />
+                    <span>{PLATFORMS[p]}</span>
+                  </span>
+                )}
               </li>
             ))
           }
@@ -122,10 +128,7 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 14px 24px;
-    margin-top: clamp(24px, 3vw, 36px);
-    padding-top: clamp(20px, 3vw, 28px);
-    border-top: 1px solid var(--line);
+    margin-top: clamp(20px, 3vw, 32px);
   }
   .platform-links ul {
     display: flex;
@@ -136,7 +139,8 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     margin: 0;
     padding: 0;
   }
-  .platform-links a {
+  .platform-links a,
+  .platform-links .unlinked {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -153,7 +157,7 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     text-decoration: none;
     transition: color 0.2s, border-color 0.2s;
   }
-  .platform-links a :global(.platform-icon) {
+  .platform-links :global(.platform-icon) {
     font-size: 22px;
   }
   .platform-links a:hover {
