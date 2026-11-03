@@ -1,0 +1,109 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { Game } from '../lib/games';
+
+interface Props {
+  game: Game;
+  // One row of four (homepage) instead of a two-column grid (game page).
+  row?: boolean;
+}
+
+const { game, row = false } = Astro.props;
+const full = await Promise.all(game.shots.map((s) => getImage({ src: s, width: 1920 })));
+---
+
+<div class:list={['shots', { row }]}>
+  {
+    game.shots.map((shot, i) => (
+      <a href={full[i].src} data-shot>
+        <Image
+          src={shot}
+          alt={`${game.title} screenshot ${i + 1}`}
+          widths={[480, 800]}
+          sizes={row ? '(max-width: 700px) 50vw, 25vw' : '(max-width: 700px) 100vw, 50vw'}
+        />
+      </a>
+    ))
+  }
+</div>
+
+<dialog class="lightbox" data-lightbox>
+  <img alt="" />
+  <button type="button" aria-label="Close">×</button>
+</dialog>
+
+<script>
+  document.querySelectorAll<HTMLDialogElement>('[data-lightbox]').forEach((dialog) => {
+    const img = dialog.querySelector('img')!;
+    dialog.previousElementSibling!.querySelectorAll<HTMLAnchorElement>('[data-shot]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        img.src = a.href;
+        img.alt = a.querySelector('img')?.alt ?? '';
+        dialog.showModal();
+      });
+    });
+    dialog.addEventListener('click', () => dialog.close());
+  });
+</script>
+
+<style>
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .row {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .shots a {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    aspect-ratio: 16 / 9;
+  }
+  .shots :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .shots a:hover :global(img) {
+    transform: scale(1.04);
+  }
+  .lightbox {
+    max-width: min(1600px, 96vw);
+    padding: 0;
+    border: 1px solid var(--line);
+    background: #000;
+  }
+  .lightbox::backdrop {
+    background: rgb(0 0 0 / 0.85);
+  }
+  .lightbox img {
+    max-height: 90vh;
+    width: auto;
+  }
+  .lightbox button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: rgb(0 0 0 / 0.6);
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+  @media (max-width: 700px) {
+    .row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .shots:not(.row) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

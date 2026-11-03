@@ -4,6 +4,8 @@ import GameHero from '../components/GameHero.astro';
 import GameCard from '../components/GameCard.astro';
 import Trailer from '../components/Trailer.astro';
 import Showcase from '../components/Showcase.astro';
+import Screenshots from '../components/Screenshots.astro';
+import StoreButtons from '../components/StoreButtons.astro';
 import { games, featured, studio, totalReviews, PLATFORMS } from '../lib/games';
 import { url } from '../lib/url';
 
@@ -14,7 +16,8 @@ const stats = [
   { value: years, label: 'Years in the arena' },
 ];
 
-// Featured game is chapter I; showcased games follow in release order.
+// Optional full-screen bands for games flagged `"showcase": true` in games.json (none right now).
+// The featured game is chapter I; showcased games follow in release order.
 const NUMERALS = ['II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 const showcase = games.filter((g) => g.showcase && g !== featured);
 
@@ -29,9 +32,18 @@ const laurels = games
   <h1 class="visually-hidden">{studio.name}: video game developer and publisher</h1>
   <GameHero game={featured} heading="h2" eyebrow={featured.upcoming ? 'New from Brain Seal' : 'Latest from Brain Seal'} link />
 
-  <section class="section trailer-band">
+  <section class="section featured" style={`--accent: ${featured.accent}`} aria-label={featured.title}>
     <div class="wrap">
-      <Trailer id={featured.youtube} title={featured.title} poster={featured.shots[0] ?? featured.hero} />
+      <div class="feature">
+        <Trailer id={featured.youtube} title={featured.title} poster={featured.shots[0] ?? featured.hero} />
+        <div class="pitch">
+          <span class="eyebrow">{featured.genres.join(' · ')}</span>
+          <h2>{featured.tagline}</h2>
+          {featured.description.map((p) => <p>{p}</p>)}
+          <StoreButtons game={featured} />
+        </div>
+      </div>
+      {featured.shots.length > 0 && <Screenshots game={featured} row />}
     </div>
   </section>
 
@@ -76,6 +88,18 @@ const laurels = games
     )
   }
 
+  <section class="section games" id="games">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Our games</span>
+        <h2>The Hall of Glory</h2>
+      </div>
+      <div class="grid-games">
+        {games.map((game) => <GameCard game={game} />)}
+      </div>
+    </div>
+  </section>
+
   <section class="section manifesto">
     <div class="watermark" aria-hidden="true">Brain Seal</div>
     <div class="wrap grid">
@@ -104,24 +128,37 @@ const laurels = games
       </dl>
     </div>
   </section>
-
-  <section class="section games" id="games">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Our games</span>
-        <h2>The Hall of Glory</h2>
-      </div>
-      <div class="grid-games">
-        {games.map((game) => <GameCard game={game} />)}
-      </div>
-    </div>
-  </section>
 </Base>
 
 <style>
-  .trailer-band {
-    padding-top: 0;
+  .featured {
+    padding-top: clamp(16px, 3vw, 40px);
     padding-bottom: clamp(48px, 7vw, 88px);
+  }
+  .feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+    margin-bottom: clamp(16px, 2.5vw, 28px);
+  }
+  .pitch {
+    display: grid;
+    justify-items: start;
+  }
+  .pitch .eyebrow {
+    color: var(--accent);
+  }
+  .pitch h2 {
+    margin: 14px 0 18px;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    text-transform: uppercase;
+  }
+  .pitch p {
+    color: #d8cfc1;
+  }
+  .pitch :global(.btn-row) {
+    margin-top: 8px;
   }
   .verdict {
     border-block: 1px solid var(--line);
@@ -273,6 +310,11 @@ const laurels = games
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(220px, 42vw), 1fr));
     gap: clamp(20px, 3vw, 36px) clamp(14px, 2.5vw, 32px);
+  }
+  @media (max-width: 960px) {
+    .feature {
+      grid-template-columns: 1fr;
+    }
   }
   @media (max-width: 760px) {
     .verdict-row {

@@ -1,9 +1,9 @@
 ---
-import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import GameHero from '../../components/GameHero.astro';
 import GameCard from '../../components/GameCard.astro';
 import Trailer from '../../components/Trailer.astro';
+import Screenshots from '../../components/Screenshots.astro';
 import { games, formatDate, PLATFORMS, platformsOf, studio, type Game } from '../../lib/games';
 import { url } from '../../lib/url';
 
@@ -18,7 +18,6 @@ interface Props {
 const { game } = Astro.props;
 const platforms = platformsOf(game).map((p) => PLATFORMS[p]);
 const others = games.filter((g) => g.slug !== game.slug).slice(0, 4);
-const fullShots = await Promise.all(game.shots.map((s) => getImage({ src: s, width: 1920 })));
 
 const facts = [
   { label: game.upcoming ? 'Release date' : 'Released', value: formatDate(game.releaseDate) },
@@ -55,6 +54,7 @@ const jsonLd = {
         </div>
         <div class="about">
           <span class="eyebrow">The game</span>
+          {game.heroHasLogo && <p>{game.summary}</p>}
           {game.description.map((p) => <p>{p}</p>)}
         </div>
       </div>
@@ -86,13 +86,7 @@ const jsonLd = {
             <span class="eyebrow">Screenshots</span>
             <h2>Into battle</h2>
           </div>
-          <div class="shots">
-            {game.shots.map((shot, i) => (
-              <a href={fullShots[i].src} data-shot>
-                <Image src={shot} alt={`${game.title} screenshot ${i + 1}`} widths={[480, 800]} sizes="(max-width: 700px) 100vw, 50vw" />
-              </a>
-            ))}
-          </div>
+          <Screenshots game={game} />
         </div>
       </section>
     )
@@ -109,26 +103,7 @@ const jsonLd = {
       </div>
     </div>
   </section>
-
-  <dialog class="lightbox" data-lightbox>
-    <img alt="" />
-    <button type="button" aria-label="Close">×</button>
-  </dialog>
 </Base>
-
-<script>
-  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]')!;
-  const img = dialog.querySelector('img')!;
-  document.querySelectorAll<HTMLAnchorElement>('[data-shot]').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      img.src = a.href;
-      img.alt = a.querySelector('img')?.alt ?? '';
-      dialog.showModal();
-    });
-  });
-  dialog.addEventListener('click', () => dialog.close());
-</script>
 
 <style>
   .body {
@@ -190,54 +165,10 @@ const jsonLd = {
     border-top: 1px solid var(--line);
     background: var(--ink-2);
   }
-  .shots {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-  .shots a {
-    overflow: hidden;
-    border: 1px solid var(--line);
-    aspect-ratio: 16 / 9;
-  }
-  .shots :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s;
-  }
-  .shots a:hover :global(img) {
-    transform: scale(1.04);
-  }
   .more-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: clamp(14px, 2.5vw, 32px);
-  }
-  .lightbox {
-    max-width: min(1600px, 96vw);
-    padding: 0;
-    border: 1px solid var(--line);
-    background: #000;
-  }
-  .lightbox::backdrop {
-    background: rgb(0 0 0 / 0.85);
-  }
-  .lightbox img {
-    max-height: 90vh;
-    width: auto;
-  }
-  .lightbox button {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 44px;
-    height: 44px;
-    border: 0;
-    background: rgb(0 0 0 / 0.6);
-    color: #fff;
-    font-size: 1.8rem;
-    cursor: pointer;
   }
   @media (max-width: 960px) {
     .layout {
@@ -248,11 +179,6 @@ const jsonLd = {
     }
     .more-grid {
       grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (max-width: 600px) {
-    .shots {
-      grid-template-columns: 1fr;
     }
   }
 </style>

@@ -25,45 +25,52 @@ const units = [
 ];
 ---
 
-<section class="hero" style={`--accent: ${game.accent}`} data-launch={countdown ? game.releaseDate.toISOString() : undefined}>
+<section
+  class:list={['hero', { 'art-logo': game.heroHasLogo }]}
+  style={`--accent: ${game.accent}`}
+  data-launch={countdown ? game.releaseDate.toISOString() : undefined}>
   <Image
     class="bg"
     src={game.hero}
-    alt=""
-    widths={[960, 1600, 2400]}
+    alt={game.heroHasLogo ? `${game.title} key art` : ''}
+    widths={[960, 1600, 2400, 3200]}
     sizes="100vw"
     loading="eager"
     fetchpriority="high"
   />
   <div class="wrap content">
-    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-    <Heading class="title">
+    <div class="lead">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <Heading class:list={['title', { 'visually-hidden': game.heroHasLogo }]}>
+        {
+          game.logo && !game.heroHasLogo ? (
+            <Image src={game.logo} alt={game.title} widths={[480, 720]} sizes="(max-width: 600px) 80vw, 520px" loading="eager" />
+          ) : (
+            game.title
+          )
+        }
+      </Heading>
+      <p class="status"><span class="dot"></span><span data-status>{status}</span></p>
       {
-        game.logo ? (
-          <Image src={game.logo} alt={game.title} widths={[480, 720]} sizes="(max-width: 600px) 80vw, 520px" loading="eager" />
-        ) : (
-          game.title
+        countdown && (
+          <div class="countdown" data-countdown hidden>
+            {units.map(([unit, label]) => (
+              <div>
+                <span data-unit={unit}>00</span>
+                <small>{label}</small>
+              </div>
+            ))}
+          </div>
         )
       }
-    </Heading>
-    <p class="status"><span class="dot"></span><span data-status>{status}</span></p>
-    {
-      countdown && (
-        <div class="countdown" data-countdown hidden>
-          {units.map(([unit, label]) => (
-            <div>
-              <span data-unit={unit}>00</span>
-              <small>{label}</small>
-            </div>
-          ))}
-        </div>
-      )
-    }
-    <p class="tagline">{game.tagline}</p>
-    <p class="summary">{game.summary}</p>
-    {game.review && <ReviewBadge review={game.review} />}
-    <StoreButtons game={game} />
-    {link && <a class="more" href={url(`/games/${game.slug}/`)}>Enter the arena →</a>}
+      <p class="tagline">{game.tagline}</p>
+      {!game.heroHasLogo && <p class="summary">{game.summary}</p>}
+    </div>
+    <div class="actions">
+      {game.review && <ReviewBadge review={game.review} />}
+      <StoreButtons game={game} />
+      {link && <a class="more" href={url(`/games/${game.slug}/`)}>Enter the arena →</a>}
+    </div>
   </div>
 </section>
 
@@ -124,13 +131,42 @@ const units = [
       linear-gradient(90deg, rgb(11 9 8 / 0.92) 0%, rgb(11 9 8 / 0.65) 40%, rgb(11 9 8 / 0.1) 75%),
       linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.4) 35%, transparent 60%);
   }
-  .content {
+  .content,
+  .lead,
+  .actions {
     display: grid;
     justify-items: start;
     gap: 16px;
   }
-  .content > * {
+  .lead > *,
+  .actions > * {
     max-width: 620px;
+  }
+  /* Key art with the logo painted in: keep the art clear and put the details in a bar along the bottom. */
+  .art-logo :global(.bg) {
+    object-position: 50% 0%;
+  }
+  .art-logo::before {
+    background:
+      linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.88) 20%, rgb(11 9 8 / 0.4) 36%, transparent 50%),
+      linear-gradient(180deg, rgb(11 9 8 / 0.5), transparent 18%);
+  }
+  .art-logo {
+    padding-bottom: clamp(32px, 4vw, 48px);
+  }
+  .art-logo .content {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px 48px;
+  }
+  .art-logo .lead {
+    gap: 12px;
+  }
+  .art-logo .actions {
+    justify-items: end;
+  }
+  .art-logo .tagline {
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
   }
   .title {
     font-size: clamp(2.8rem, 8vw, 5.6rem);
@@ -243,6 +279,29 @@ const units = [
   @media (max-width: 720px) {
     .hero {
       min-height: 92svh;
+    }
+    .art-logo {
+      display: block;
+      min-height: 0;
+      padding-top: 64px;
+    }
+    .art-logo :global(.bg) {
+      position: relative;
+      z-index: auto;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-position: 50% 50%;
+      animation: none;
+    }
+    .art-logo::before {
+      display: none;
+    }
+    .art-logo .content {
+      grid-template-columns: 1fr;
+      padding-top: 24px;
+    }
+    .art-logo .actions {
+      justify-items: start;
     }
     .countdown {
       gap: 6px;

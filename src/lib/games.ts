@@ -20,7 +20,7 @@ const now = new Date();
 
 export const games = data
   .map((game) => {
-    const extra = game as { publisher?: string; launchTime?: string; showcase?: boolean };
+    const extra = game as { publisher?: string; launchTime?: string; showcase?: boolean; heroHasLogo?: boolean };
     // launchTime is the UTC unlock time on release day, when known; it drives the countdown.
     const releaseDate = new Date(`${game.released}T${extra.launchTime ?? '00:00'}:00Z`);
     const review = reviews[game.steamAppId];
@@ -29,6 +29,8 @@ export const games = data
       stores: game.stores as Partial<Record<Platform, string>>,
       publisher: extra.publisher,
       showcase: extra.showcase ?? false,
+      // The key art already has the game's logo painted in, so the hero keeps it clear of text.
+      heroHasLogo: extra.heroHasLogo ?? false,
       hasLaunchTime: !!extra.launchTime,
       releaseDate,
       upcoming: releaseDate > now,
