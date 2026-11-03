@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import ReviewBadge from './ReviewBadge.astro';
 import { PLATFORMS, platformsOf, type Game } from '../lib/games';
 import { url } from '../lib/url';
 
@@ -31,7 +30,6 @@ const platforms = platformsOf(game).map((p) => PLATFORMS[p]).join(' · ');
       </h3>
       <p class="tagline">{game.tagline}</p>
       <p class="summary">{game.summary}</p>
-      {game.review && <ReviewBadge review={game.review} />}
       <p class="platforms">{platforms}</p>
       <div class="btn-row">
         <a class="btn btn-primary" href={url(`/games/${game.slug}/`)}>Enter the arena</a>

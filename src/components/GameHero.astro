@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import StoreButtons from './StoreButtons.astro';
-import ReviewBadge from './ReviewBadge.astro';
 import { formatDate, type Game } from '../lib/games';
 import { url } from '../lib/url';
 
@@ -65,10 +64,7 @@ const units = [
       }
       {
         game.heroHasLogo ? (
-          <>
-            <StoreButtons game={game} primaryOnly />
-            {game.review && <ReviewBadge review={game.review} />}
-          </>
+          <StoreButtons game={game} primaryOnly />
         ) : (
           <>
             <p class="tagline">{game.tagline}</p>
@@ -80,7 +76,6 @@ const units = [
     {
       (!game.heroHasLogo || link) && (
         <div class="actions">
-          {!game.heroHasLogo && game.review && <ReviewBadge review={game.review} />}
           {!game.heroHasLogo && <StoreButtons game={game} />}
           {link && <a class="more" href={url(`/games/${game.slug}/`)}>Enter the arena →</a>}
         </div>
