@@ -15,15 +15,25 @@ const PATHS: Record<Platform, string> = {
 
 interface Props {
   platform: Platform;
+  // Set when the platform name is already written next to the icon.
+  decorative?: boolean;
 }
 
-const { platform } = Astro.props;
+const { platform, decorative = false } = Astro.props;
 ---
 
-<svg class="platform-icon" viewBox="0 0 24 24" role="img" aria-label={PLATFORMS[platform]}>
-  <title>{PLATFORMS[platform]}</title>
-  <path d={PATHS[platform]}></path>
-</svg>
+{
+  decorative ? (
+    <svg class="platform-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d={PATHS[platform]} />
+    </svg>
+  ) : (
+    <svg class="platform-icon" viewBox="0 0 24 24" role="img" aria-label={PLATFORMS[platform]}>
+      <title>{PLATFORMS[platform]}</title>
+      <path d={PATHS[platform]} />
+    </svg>
+  )
+}
 
 <style>
   .platform-icon {

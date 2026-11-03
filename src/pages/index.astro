@@ -5,7 +5,8 @@ import GameCard from '../components/GameCard.astro';
 import Trailer from '../components/Trailer.astro';
 import Showcase from '../components/Showcase.astro';
 import Screenshots from '../components/Screenshots.astro';
-import { games, featured, studio, PLATFORMS } from '../lib/games';
+import PlatformIcon from '../components/PlatformIcon.astro';
+import { games, featured, studio, platformsOf, PLATFORMS } from '../lib/games';
 
 // Optional full-screen bands for games flagged `"showcase": true` in games.json (none right now).
 // The featured game is chapter I; showcased games follow in release order.
@@ -27,6 +28,21 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
         </div>
       </div>
       {featured.shots.length > 0 && <Screenshots game={featured} row />}
+      <div class="platform-links">
+        <span class="eyebrow">{featured.upcoming ? 'Coming to' : 'Available on'}</span>
+        <ul>
+          {
+            platformsOf(featured).map((p) => (
+              <li>
+                <a href={featured.stores[p]} rel="noopener">
+                  <PlatformIcon platform={p} decorative />
+                  <span>{PLATFORMS[p]}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -100,6 +116,49 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
   }
   .pitch p {
     color: #d8cfc1;
+  }
+  .platform-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px 24px;
+    margin-top: clamp(24px, 3vw, 36px);
+    padding-top: clamp(20px, 3vw, 28px);
+    border-top: 1px solid var(--line);
+  }
+  .platform-links ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .platform-links a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 10px 18px;
+    border: 1px solid var(--line);
+    background: var(--ink-2);
+    color: var(--gold);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .platform-links a :global(.platform-icon) {
+    font-size: 22px;
+  }
+  .platform-links a:hover {
+    color: var(--gold-hi);
+    border-color: var(--gold);
   }
   .games {
     border-top: 1px solid var(--line);
