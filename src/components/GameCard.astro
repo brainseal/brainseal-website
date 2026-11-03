@@ -2,8 +2,6 @@
 import { Image } from 'astro:assets';
 import { PLATFORMS, platformsOf, type Game } from '../lib/games';
 import { url } from '../lib/url';
-import ReviewBadge from './ReviewBadge.astro';
-
 interface Props {
   game: Game;
 }
@@ -19,7 +17,6 @@ const { game } = Astro.props;
   <div class="meta">
     <h3>{game.title}</h3>
     <p>{game.year} · {platformsOf(game).map((p) => PLATFORMS[p].replace('Nintendo ', '')).join(' · ')}</p>
-    {game.review && <ReviewBadge review={game.review} compact />}
   </div>
 </a>
 
