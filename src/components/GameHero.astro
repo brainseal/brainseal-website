@@ -158,13 +158,16 @@ const units = [
     max-width: 620px;
   }
   /* Key art with the logo painted in: keep the art clear and put the details in a bar along the bottom. */
+  /* Start the art below the fixed top bar so a painted logo near the top is never hidden behind it. */
   .art-logo :global(.bg) {
+    top: 72px;
+    height: calc(100% - 72px);
     object-position: 50% 0%;
+    /* Anchor the slow zoom-in to the top edge so it never pushes the art back under the bar. */
+    transform-origin: 50% 0;
   }
   .art-logo::before {
-    background:
-      linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.88) 20%, rgb(11 9 8 / 0.4) 36%, transparent 50%),
-      linear-gradient(180deg, rgb(11 9 8 / 0.5), transparent 18%);
+    background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.88) 20%, rgb(11 9 8 / 0.4) 36%, transparent 50%);
   }
   .art-logo {
     padding-bottom: clamp(32px, 4vw, 48px);
@@ -331,6 +334,7 @@ const units = [
     }
     .art-logo :global(.bg) {
       position: relative;
+      top: auto;
       z-index: auto;
       height: auto;
       aspect-ratio: 16 / 9;
