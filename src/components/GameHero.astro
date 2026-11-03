@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import StoreButtons from './StoreButtons.astro';
 import { formatDate, type Game } from '../lib/games';
+import { url } from '../lib/url';
 
 interface Props {
   game: Game;
@@ -41,7 +42,7 @@ const status = game.upcoming
     <p class="tagline">{game.tagline}</p>
     <p class="summary">{game.summary}</p>
     <StoreButtons game={game} />
-    {link && <a class="more" href={`/games/${game.slug}/`}>Enter the arena →</a>}
+    {link && <a class="more" href={url(`/games/${game.slug}/`)}>Enter the arena →</a>}
   </div>
 </section>
 

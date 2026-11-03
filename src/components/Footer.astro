@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import seal from '../assets/brand/seal.png';
 import { studio } from '../lib/games';
+import { url } from '../lib/url';
 
 const year = new Date().getFullYear();
 ---
@@ -26,7 +27,7 @@ const year = new Date().getFullYear();
     <div class="legal">
       <span>© {year} Brain Seal Ltd. All rights reserved.</span>
       <span>
-        Player support: <a href={`mailto:${studio.supportEmail}`}>{studio.supportEmail}</a> · <a href="/privacy-policy/">Privacy policy</a>
+        Player support: <a href={`mailto:${studio.supportEmail}`}>{studio.supportEmail}</a> · <a href={url('/privacy-policy/')}>Privacy policy</a>
       </span>
     </div>
   </div>

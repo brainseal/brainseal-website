@@ -4,6 +4,7 @@ import GameHero from '../components/GameHero.astro';
 import GameCard from '../components/GameCard.astro';
 import Trailer from '../components/Trailer.astro';
 import { games, featured, studio, PLATFORMS } from '../lib/games';
+import { url } from '../lib/url';
 
 const years = new Date().getFullYear() - studio.founded;
 const stats = [
@@ -37,7 +38,7 @@ const stats = [
           of them to {Object.values(PLATFORMS).slice(0, -1).join(', ')} and {Object.values(PLATFORMS).at(-1)}.
         </p>
         <p>Small studio. Big battles. Every game carries the seal.</p>
-        <a class="btn" href="/about/">About the studio</a>
+        <a class="btn" href={url('/about/')}>About the studio</a>
       </div>
       <dl class="stats">
         {

@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { PLATFORMS, platformsOf, type Game } from '../lib/games';
+import { url } from '../lib/url';
 
 interface Props {
   game: Game;
@@ -9,7 +10,7 @@ interface Props {
 const { game } = Astro.props;
 ---
 
-<a class="card" href={`/games/${game.slug}/`} style={`--accent: ${game.accent}`}>
+<a class="card" href={url(`/games/${game.slug}/`)} style={`--accent: ${game.accent}`}>
   <div class="art">
     <Image src={game.cover} alt={`${game.title} cover art`} widths={[300, 450, 600]} sizes="(max-width: 600px) 50vw, 300px" />
     {game.upcoming && <span class="ribbon">Coming soon</span>}

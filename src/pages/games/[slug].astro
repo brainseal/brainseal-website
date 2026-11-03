@@ -5,6 +5,7 @@ import GameHero from '../../components/GameHero.astro';
 import GameCard from '../../components/GameCard.astro';
 import Trailer from '../../components/Trailer.astro';
 import { games, formatDate, PLATFORMS, platformsOf, type Game } from '../../lib/games';
+import { url } from '../../lib/url';
 
 export function getStaticPaths() {
   return games.map((game) => ({ params: { slug: game.slug }, props: { game } }));
@@ -32,7 +33,7 @@ const jsonLd = {
   '@type': 'VideoGame',
   name: game.title,
   description: game.summary,
-  url: new URL(`/games/${game.slug}/`, Astro.site).href,
+  url: new URL(url(`/games/${game.slug}/`), Astro.site).href,
   datePublished: game.released,
   genre: game.genres,
   gamePlatform: platforms,

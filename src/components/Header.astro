@@ -1,17 +1,18 @@
 ---
 import { Image } from 'astro:assets';
 import seal from '../assets/brand/seal.png';
+import { url } from '../lib/url';
 
 const links = [
-  { href: '/#games', label: 'Games' },
-  { href: '/about/', label: 'About' },
-  { href: '/#contact', label: 'Contact', wide: true },
+  { href: url('/#games'), label: 'Games' },
+  { href: url('/about/'), label: 'About' },
+  { href: url('/#contact'), label: 'Contact', wide: true },
 ];
 ---
 
 <header class="header" data-header>
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="Brain Seal home">
+    <a class="brand" href={url('/')}aria-label="Brain Seal home">
       <Image src={seal} alt="" width={44} height={44} loading="eager" />
       <span class="wordmark">Brain Seal</span>
     </a>
