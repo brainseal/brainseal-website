@@ -23,7 +23,8 @@ npm run build        # production build into dist/
    - `launchTime`: the UTC time the game unlocks on release day (e.g. `"18:00"`). When set, the homepage shows a live countdown.
    - `showcase`: `true` gives the game a full-screen band on the homepage under "Battles already won"
 2. Run `npm run fetch-art` to download the key art, logo, cover and up to 8 screenshots from Steam into `src/assets/games/<slug>/`. Replace any file there with your own art if you prefer; keep the same file name.
-3. Commit and push. The site rebuilds and goes live in about a minute.
+3. Run `npm run fetch-about` to pull every game's "About this game" text from Steam into `src/data/about.json` (headings, paragraphs and bullet lists; Steam's images and clips are left out). Edit that file to change a game page's text; re-running the command overwrites it.
+4. Commit and push. The site rebuilds and goes live in about a minute.
 
 Games with a future `released` date show "Coming soon" and "Wishlist on Steam". The site rebuilds every night, so on launch day they switch to "Out now" by themselves.
 
