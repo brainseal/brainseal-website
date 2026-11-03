@@ -28,6 +28,7 @@
     "title": "Dark Quest 4",
     "steamAppId": 2453840,
     "released": "2025-11-05",
+    "heroHasLogo": true,
     "genres": ["RPG", "Turn-based", "Dungeon crawler"],
     "tagline": "Assemble your party. Conquer the dungeon.",
     "summary": "A turn based dungeon crawler where you create a party of heroes to go on epic quests.",

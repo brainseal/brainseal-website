@@ -65,7 +65,10 @@ const units = [
       }
       {
         game.heroHasLogo ? (
-          <StoreButtons game={game} primaryOnly />
+          <>
+            <StoreButtons game={game} primaryOnly />
+            {game.review && <ReviewBadge review={game.review} />}
+          </>
         ) : (
           <>
             <p class="tagline">{game.tagline}</p>
@@ -75,9 +78,9 @@ const units = [
       }
     </div>
     {
-      (!game.heroHasLogo || game.review || link) && (
+      (!game.heroHasLogo || link) && (
         <div class="actions">
-          {game.review && <ReviewBadge review={game.review} />}
+          {!game.heroHasLogo && game.review && <ReviewBadge review={game.review} />}
           {!game.heroHasLogo && <StoreButtons game={game} />}
           {link && <a class="more" href={url(`/games/${game.slug}/`)}>Enter the arena →</a>}
         </div>
@@ -303,10 +306,28 @@ const units = [
     .hero {
       min-height: 92svh;
     }
+    .countdown {
+      gap: 6px;
+    }
+    .countdown div {
+      min-width: 0;
+      flex: 1;
+      max-width: 76px;
+    }
+    .hero :global(.bg) {
+      object-position: 60% 30%;
+    }
+    .hero::before {
+      background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.8) 45%, rgb(11 9 8 / 0.25) 100%);
+    }
+  }
+  /* In windows narrower than 4:3, filling the screen would crop the painted logo at the sides,
+     so show the whole artwork with the details underneath instead. */
+  @media (max-aspect-ratio: 4/3) {
     .art-logo {
       display: block;
       min-height: 0;
-      padding-top: 64px;
+      padding-top: 72px;
     }
     .art-logo :global(.bg) {
       position: relative;
@@ -321,20 +342,6 @@ const units = [
     }
     .art-logo .content {
       padding-top: 24px;
-    }
-    .countdown {
-      gap: 6px;
-    }
-    .countdown div {
-      min-width: 0;
-      flex: 1;
-      max-width: 76px;
-    }
-    .hero :global(.bg) {
-      object-position: 60% 30%;
-    }
-    .hero::before {
-      background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.8) 45%, rgb(11 9 8 / 0.25) 100%);
     }
   }
 </style>

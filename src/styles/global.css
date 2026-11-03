@@ -101,6 +101,11 @@ p {
   padding-block: clamp(72px, 10vw, 128px);
 }
 
+/* Keep in-page jumps (#games, #about) clear of the fixed header. */
+[id] {
+  scroll-margin-top: 72px;
+}
+
 .section-head {
   display: grid;
   gap: 14px;
