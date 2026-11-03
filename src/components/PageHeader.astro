@@ -1,15 +1,16 @@
 ---
 interface Props {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
+  center?: boolean;
 }
 
-const { eyebrow, title } = Astro.props;
+const { eyebrow, title, center = false } = Astro.props;
 ---
 
-<header class="page-header">
+<header class:list={['page-header', { center }]}>
   <div class="wrap">
-    <span class="eyebrow">{eyebrow}</span>
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
     <h1>{title}</h1>
     <slot />
   </div>
@@ -41,5 +42,14 @@ const { eyebrow, title } = Astro.props;
     margin: 0;
     font-size: 1.15rem;
     color: #d8cfc1;
+  }
+  .center .wrap {
+    justify-items: center;
+    text-align: center;
+  }
+  .center {
+    background:
+      radial-gradient(ellipse 60% 90% at 50% 0%, rgb(179 25 31 / 0.25), transparent 70%),
+      var(--ink-2);
   }
 </style>
