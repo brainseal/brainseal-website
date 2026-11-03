@@ -77,11 +77,11 @@ export const studio = {
   email: 'info@brainseal.com',
   supportEmail: 'support@brainseal.com',
   discord: 'https://discord.com/invite/H5tye5aMAM',
+  // Footer links under the Discord and email buttons (Discord has its own button, so it isn't listed).
   socials: [
-    { name: 'Discord', url: 'https://discord.com/invite/H5tye5aMAM' },
-    { name: 'YouTube', url: 'https://www.youtube.com/brainseal' },
-    { name: 'X', url: 'https://x.com/brainseal' },
-    { name: 'Facebook', url: 'https://www.facebook.com/brainseal/' },
-    { name: 'Steam', url: 'https://store.steampowered.com/search/?developer=Brain%20Seal%20Ltd' },
-  ],
+    { name: 'YouTube', icon: 'youtube', url: 'https://www.youtube.com/brainseal' },
+    { name: 'X', icon: 'x', url: 'https://x.com/brainseal' },
+    { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/brainseal/' },
+    { name: 'Steam', icon: 'steam', url: 'https://store.steampowered.com/search/?developer=Brain%20Seal%20Ltd' },
+  ] as const,
 };
