@@ -6,7 +6,7 @@ import Trailer from '../components/Trailer.astro';
 import Showcase from '../components/Showcase.astro';
 import Screenshots from '../components/Screenshots.astro';
 import StoreButtons from '../components/StoreButtons.astro';
-import { games, featured, studio, totalReviews, PLATFORMS } from '../lib/games';
+import { games, featured, studio, PLATFORMS } from '../lib/games';
 import { url } from '../lib/url';
 
 const years = new Date().getFullYear() - studio.founded;
@@ -20,12 +20,6 @@ const stats = [
 // The featured game is chapter I; showcased games follow in release order.
 const NUMERALS = ['II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 const showcase = games.filter((g) => g.showcase && g !== featured);
-
-// Laurels for the best-reviewed games (Positive or better on Steam).
-const laurels = games
-  .filter((g) => g.review && g.review.score >= 7)
-  .sort((a, b) => b.review!.score - a.review!.score || b.review!.count - a.review!.count)
-  .slice(0, 3);
 ---
 
 <Base>
@@ -46,31 +40,6 @@ const laurels = games
       {featured.shots.length > 0 && <Screenshots game={featured} row />}
     </div>
   </section>
-
-  {
-    totalReviews > 0 && (
-      <section class="verdict" aria-label="Steam reviews">
-        <div class="wrap verdict-row">
-          <div class="laurel">
-            <strong>{totalReviews.toLocaleString('en-GB')}</strong>
-            <span>Steam player reviews</span>
-          </div>
-          {laurels.map((g) => (
-            <a class="laurel" href={url(`/games/${g.slug}/`)}>
-              <strong>{g.review!.percent}%</strong>
-              <span>
-                {g.title} · {g.review!.label}
-              </span>
-            </a>
-          ))}
-          <a class="laurel" href={studio.discord} rel="noopener">
-            <strong>Join</strong>
-            <span>The legion on Discord</span>
-          </a>
-        </div>
-      </section>
-    )
-  }
 
   {
     showcase.length > 0 && (
@@ -160,68 +129,8 @@ const laurels = games
   .pitch :global(.btn-row) {
     margin-top: 8px;
   }
-  .verdict {
-    border-block: 1px solid var(--line);
-    background:
-      radial-gradient(ellipse 50% 120% at 50% 50%, rgb(212 162 76 / 0.08), transparent 70%),
-      var(--ink-2);
-  }
-  .verdict-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-  .laurel {
-    display: grid;
-    justify-items: center;
-    align-content: center;
-    gap: 6px;
-    padding: 28px 12px;
-    text-align: center;
-    text-decoration: none;
-  }
-  .laurel + .laurel {
-    border-left: 1px solid var(--line);
-  }
-  .laurel strong {
-    position: relative;
-    padding-inline: 30px;
-    font-family: var(--display);
-    font-weight: 900;
-    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
-    line-height: 1;
-    background: linear-gradient(180deg, #fff3d6, var(--gold-hi) 45%, var(--gold));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  /* Laurel sprigs either side of each number */
-  .laurel strong::before,
-  .laurel strong::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 16px;
-    height: 32px;
-    translate: 0 -50%;
-    background: var(--gold);
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 40'%3E%3Cpath d='M17 38C8 32 4 22 6 4' fill='none' stroke='black' stroke-width='1.4'/%3E%3Cg%3E%3Cellipse cx='4' cy='10' rx='2' ry='4.5' transform='rotate(-20 4 10)'/%3E%3Cellipse cx='3.5' cy='19' rx='2' ry='4.5' transform='rotate(-35 3.5 19)'/%3E%3Cellipse cx='6' cy='27.5' rx='2' ry='4.5' transform='rotate(-55 6 27.5)'/%3E%3Cellipse cx='10.5' cy='34' rx='2' ry='4.5' transform='rotate(-70 10.5 34)'/%3E%3Cellipse cx='10' cy='13' rx='1.8' ry='4' transform='rotate(25 10 13)'/%3E%3Cellipse cx='11' cy='22' rx='1.8' ry='4' transform='rotate(10 11 22)'/%3E%3C/g%3E%3C/svg%3E")
-      center / contain no-repeat;
-  }
-  .laurel strong::before {
-    left: 0;
-  }
-  .laurel strong::after {
-    right: 0;
-    scale: -1 1;
-  }
-  .laurel span {
-    color: var(--muted);
-    font-size: 0.74rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-  a.laurel:hover span {
-    color: var(--gold-hi);
+  .games {
+    border-top: 1px solid var(--line);
   }
   .showcase-head {
     padding-bottom: clamp(24px, 4vw, 40px);
@@ -317,15 +226,6 @@ const laurels = games
     }
   }
   @media (max-width: 760px) {
-    .verdict-row {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .laurel:nth-child(odd) {
-      border-left: 0;
-    }
-    .laurel:nth-child(n + 3) {
-      border-top: 1px solid var(--line);
-    }
     .grid {
       grid-template-columns: 1fr;
     }
