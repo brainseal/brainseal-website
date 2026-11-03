@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import seal from '../assets/brand/seal.png';
 import { studio } from '../lib/games';
+import { ICONS } from '../lib/icons';
 import { url } from '../lib/url';
 
 const links = [
@@ -24,6 +25,10 @@ const links = [
     </a>
     <nav aria-label="Main">
       {links.map((l) => <a href={l.href} class:list={{ 'hide-phone': l.hidePhone }}>{l.label}</a>)}
+      <a class="discord" href={studio.discord} rel="noopener" aria-label="Join our Discord">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS.discord}></path></svg>
+        <span>Join our Discord</span>
+      </a>
     </nav>
   </div>
 </header>
@@ -128,6 +133,40 @@ const links = [
   }
   nav a:hover::after {
     transform: scaleX(1);
+  }
+  /* Discord in its own brand colour, matching the footer button */
+  nav .discord {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #5865f2;
+    color: #fff;
+    letter-spacing: 0.1em;
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+    transition: filter 0.2s;
+  }
+  nav .discord::after {
+    display: none;
+  }
+  nav .discord:hover {
+    color: #fff;
+    filter: brightness(1.12);
+  }
+  nav .discord svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    fill: currentColor;
+  }
+  /* Narrower screens: the button shrinks to just the Discord logo */
+  @media (max-width: 900px) {
+    nav .discord {
+      padding: 8px 10px;
+    }
+    nav .discord span {
+      display: none;
+    }
   }
   @media (max-width: 520px) {
     .bar {
