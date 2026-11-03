@@ -54,8 +54,7 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
 
   <section class="section games" id="games">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Our games</span>
+      <div class="section-head games-head">
         <h2>The Hall of Glory</h2>
       </div>
       <div class="grid-games">
@@ -113,6 +112,10 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
   }
   .games {
     border-top: 1px solid var(--line);
+  }
+  .games-head {
+    justify-items: center;
+    text-align: center;
   }
   .showcase-head {
     padding-bottom: clamp(24px, 4vw, 40px);
