@@ -7,7 +7,6 @@ import Showcase from '../components/Showcase.astro';
 import Screenshots from '../components/Screenshots.astro';
 import Contacts from '../components/Contacts.astro';
 import { games, featured, studio, PLATFORMS } from '../lib/games';
-import { url } from '../lib/url';
 
 // Optional full-screen bands for games flagged `"showcase": true` in games.json (none right now).
 // The featured game is chapter I; showcased games follow in release order.
@@ -74,7 +73,6 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
           of them to {Object.values(PLATFORMS).slice(0, -1).join(', ')} and {Object.values(PLATFORMS).at(-1)}.
         </p>
         <p>Small studio. Big battles. Every game carries the seal.</p>
-        <a class="btn" href={url('/about/')}>About the studio</a>
       </div>
       <div class="contact">
         <h3>Send word to the studio</h3>
@@ -156,9 +154,6 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
   .copy {
     color: #d8cfc1;
     padding-top: 6px;
-  }
-  .copy .btn {
-    margin-top: 12px;
   }
   .contact {
     grid-column: 1 / -1;

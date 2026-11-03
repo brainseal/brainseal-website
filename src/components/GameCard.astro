@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { PLATFORMS, platformsOf, type Game } from '../lib/games';
 import { url } from '../lib/url';
+import PlatformIcon from './PlatformIcon.astro';
 interface Props {
   game: Game;
 }
@@ -16,7 +17,16 @@ const { game } = Astro.props;
   </div>
   <div class="meta">
     <h3>{game.title}</h3>
-    <p>{game.year} · {platformsOf(game).map((p) => PLATFORMS[p].replace('Nintendo ', '')).join(' · ')}</p>
+    <p>{game.upcoming ? `Coming ${game.year}` : game.year}</p>
+    <ul class="platforms" aria-label="Platforms">
+      {
+        platformsOf(game).map((p) => (
+          <li title={PLATFORMS[p]}>
+            <PlatformIcon platform={p} />
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </a>
 
@@ -87,5 +97,28 @@ const { game } = Astro.props;
     color: var(--muted);
     font-size: 0.82rem;
     letter-spacing: 0.04em;
+  }
+  .platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+  }
+  .platforms li {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--line);
+    background: var(--ink-2);
+    color: var(--gold);
+    font-size: 15px;
+    transition: color 0.25s, border-color 0.25s;
+  }
+  .card:hover .platforms li {
+    color: var(--gold-hi);
+    border-color: rgb(212 162 76 / 0.4);
   }
 </style>
