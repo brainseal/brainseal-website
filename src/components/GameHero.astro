@@ -354,9 +354,9 @@ const units = [
       background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.8) 45%, rgb(11 9 8 / 0.25) 100%);
     }
   }
-  /* In windows narrower than 4:3, filling the screen would crop the painted logo at the sides,
-     so show the whole artwork with the details underneath instead. */
-  @media (max-aspect-ratio: 4/3) {
+  /* In windows narrower than 3:2, filling the screen would crop a wide painted logo (Monarchy's runs
+     nearly edge to edge) at the sides, so show the whole artwork with the details underneath instead. */
+  @media (max-aspect-ratio: 3/2) {
     .art-logo {
       display: block;
       min-height: 0;
