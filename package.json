@@ -6,8 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "fetch-art": "node scripts/fetch-art.mjs",
-    "fetch-about": "node scripts/fetch-about.mjs"
+    "fetch-art": "node scripts/fetch-art.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

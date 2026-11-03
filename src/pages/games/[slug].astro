@@ -4,9 +4,7 @@ import GameHero from '../../components/GameHero.astro';
 import GameCard from '../../components/GameCard.astro';
 import Trailer from '../../components/Trailer.astro';
 import Screenshots from '../../components/Screenshots.astro';
-import { games, PLATFORMS, platformsOf, studio, type Game } from '../../lib/games';
-import aboutText from '../../data/about.json';
-import { url } from '../../lib/url';
+import { games, PLATFORMS, platformsOf, studio, type Game } from '../../lib/games';import { url } from '../../lib/url';
 
 export function getStaticPaths() {
   return games.map((game) => ({ params: { slug: game.slug }, props: { game } }));
@@ -19,12 +17,6 @@ interface Props {
 const { game } = Astro.props;
 const platforms = platformsOf(game).map((p) => PLATFORMS[p]);
 const others = games.filter((g) => g.slug !== game.slug).slice(0, 4);
-
-// The game's "About this game" text from its Steam page (npm run fetch-about); falls back to the
-// short description in games.json when a game has none.
-type Block = { heading: string } | { text: string } | { list: string[] };
-const story = ((aboutText as Record<string, Block[]>)[game.slug] ?? []) as Block[];
-
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'VideoGame',
@@ -57,29 +49,7 @@ const jsonLd = {
   <section class="section shots-section">
     <div class="wrap">
       <div class="about">
-      {
-        story.length > 0 ? (
-          story.map((b) =>
-            'heading' in b ? (
-              <h3>{b.heading}</h3>
-            ) : 'list' in b ? (
-              <ul>
-                {b.list.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>{b.text}</p>
-            ),
-          )
-        ) : (
-          <>
-            {game.heroHasLogo && <h3>{game.tagline}</h3>}
-            {game.heroHasLogo && <p>{game.summary}</p>}
-            {game.description.map((p) => <p>{p}</p>)}
-          </>
-        )
-      }
+        {game.description.map((p) => <p>{p}</p>)}
       </div>
       {game.shots.length > 0 && <Screenshots game={game} />}
     </div>
@@ -113,27 +83,6 @@ const jsonLd = {
     margin: 0 auto clamp(40px, 6vw, 64px);
     font-size: 1.1rem;
     color: #ddd4c6;
-  }
-  .about > :first-child {
-    margin-top: 0;
-  }
-  .about h3 {
-    margin: 1.8em 0 0.6em;
-    padding-bottom: 0.4em;
-    border-bottom: 1px solid var(--line);
-    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
-    text-transform: uppercase;
-    color: var(--gold-hi);
-  }
-  .about ul {
-    margin: 0 0 1em;
-    padding-left: 1.3em;
-  }
-  .about li {
-    margin-bottom: 0.4em;
-  }
-  .about li::marker {
-    color: var(--gold);
   }
   .shots-section {
     border-top: 1px solid var(--line);
