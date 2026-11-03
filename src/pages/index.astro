@@ -147,14 +147,17 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     pointer-events: none;
     user-select: none;
   }
-  /* Centred heading with the studio text in a centred reading column below it */
+  /* Heading on the left, studio text on the right, each centred within its column */
   .studio {
     position: relative;
     display: grid;
-    justify-items: center;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(24px, 5vw, 72px);
+    align-items: center;
   }
   .studio .section-head {
     justify-items: center;
+    margin-bottom: 0;
     text-align: center;
   }
   .manifesto h2 em {
@@ -162,8 +165,8 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     color: var(--gold);
   }
   .copy {
-    max-width: 780px;
     color: #d8cfc1;
+    text-align: center;
   }
   .grid-games {
     display: grid;
@@ -172,6 +175,11 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
   }
   @media (max-width: 960px) {
     .feature {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 760px) {
+    .studio {
       grid-template-columns: 1fr;
     }
   }
