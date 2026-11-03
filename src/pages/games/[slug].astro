@@ -49,6 +49,7 @@ const jsonLd = {
   <section class="section shots-section">
     <div class="wrap">
       <div class="about">
+        <h2>About {game.title}</h2>
         {game.description.map((p) => <p>{p}</p>)}
       </div>
       {game.shots.length > 0 && <Screenshots game={game} />}
@@ -77,12 +78,17 @@ const jsonLd = {
     gap: clamp(20px, 3vw, 32px);
     max-width: 1180px;
   }
-  /* A reading column centred in the panel, above the screenshots; long text and lists read best left-aligned. */
+  /* The game's text, as wide as the screenshot gallery below it */
   .about {
-    max-width: 780px;
-    margin: 0 auto clamp(40px, 6vw, 64px);
+    margin-bottom: clamp(32px, 5vw, 48px);
     font-size: 1.1rem;
     color: #ddd4c6;
+  }
+  .about h2 {
+    margin-bottom: 0.7em;
+    font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+    text-transform: uppercase;
+    color: var(--text);
   }
   .shots-section {
     border-top: 1px solid var(--line);
