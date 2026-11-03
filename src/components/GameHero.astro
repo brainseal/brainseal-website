@@ -63,14 +63,26 @@ const units = [
           </div>
         )
       }
-      <p class="tagline">{game.tagline}</p>
-      {!game.heroHasLogo && <p class="summary">{game.summary}</p>}
+      {
+        game.heroHasLogo ? (
+          <StoreButtons game={game} />
+        ) : (
+          <>
+            <p class="tagline">{game.tagline}</p>
+            <p class="summary">{game.summary}</p>
+          </>
+        )
+      }
     </div>
-    <div class="actions">
-      {game.review && <ReviewBadge review={game.review} />}
-      <StoreButtons game={game} />
-      {link && <a class="more" href={url(`/games/${game.slug}/`)}>Enter the arena →</a>}
-    </div>
+    {
+      (!game.heroHasLogo || game.review || link) && (
+        <div class="actions">
+          {game.review && <ReviewBadge review={game.review} />}
+          {!game.heroHasLogo && <StoreButtons game={game} />}
+          {link && <a class="more" href={url(`/games/${game.slug}/`)}>Enter the arena →</a>}
+        </div>
+      )
+    }
   </div>
 </section>
 
@@ -165,8 +177,8 @@ const units = [
   .art-logo .actions {
     justify-items: end;
   }
-  .art-logo .tagline {
-    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  .art-logo .lead :global(.btn-row) {
+    margin-top: 6px;
   }
   .title {
     font-size: clamp(2.8rem, 8vw, 5.6rem);
