@@ -3,10 +3,12 @@ import { PLATFORMS, platformsOf, type Game } from '../lib/games';
 
 interface Props {
   game: Game;
+  // Only the main store button (the first platform), for tight spots like the logo-art hero.
+  primaryOnly?: boolean;
 }
 
-const { game } = Astro.props;
-const platforms = platformsOf(game);
+const { game, primaryOnly = false } = Astro.props;
+const platforms = platformsOf(game).slice(0, primaryOnly ? 1 : undefined);
 ---
 
 <div class="btn-row">
