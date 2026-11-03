@@ -10,7 +10,8 @@ const facts = [
   { label: 'Studio', value: studio.name },
   { label: 'Company', value: studio.legalName },
   { label: 'Based in', value: studio.location },
-  { label: 'First release', value: `Dark Quest, ${studio.founded}` },
+  { label: 'Founded', value: `${studio.founded}` },
+  { label: 'First release', value: `Dark Quest, ${studio.firstRelease}` },
   { label: 'Games', value: `${games.length}` },
   { label: 'Platforms', value: Object.values(PLATFORMS).join(', ') },
   ...(totalReviews > 0 ? [{ label: 'Steam reviews', value: totalReviews.toLocaleString('en-GB') }] : []),
@@ -38,7 +39,7 @@ const downloads = (game: (typeof games)[number]) => [
         <h2>The studio</h2>
         <p>
           {studio.name} is an independent video game developer and publisher based in London. Since the first Dark Quest
-          in {studio.founded}, the studio has released {games.filter((g) => !g.upcoming).length} games across
+          in {studio.firstRelease}, the studio has released {games.filter((g) => !g.upcoming).length} games across
           {' '}{Object.values(PLATFORMS).slice(0, -1).join(', ')} and {Object.values(PLATFORMS).at(-1)}, from the HeroQuest-inspired Dark
           Quest saga to gladiator epics, strategy and physics games.
         </p>

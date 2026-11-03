@@ -6,6 +6,7 @@ import Trailer from '../components/Trailer.astro';
 import Showcase from '../components/Showcase.astro';
 import Screenshots from '../components/Screenshots.astro';
 import PlatformIcon from '../components/PlatformIcon.astro';
+import StudioStory from '../components/StudioStory.astro';
 import { games, featured, studio, platformsOf, PLATFORMS } from '../lib/games';
 
 // Optional full-screen bands for games flagged `"showcase": true` in games.json (none right now).
@@ -85,15 +86,10 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     <div class="wrap grid">
       <div class="section-head">
         <span class="eyebrow">The studio</span>
-        <h2>Forged in London.<br /><em>Fought on every platform.</em></h2>
+        <h2>Small Studio.<br /><em>Big Adventures.</em></h2>
       </div>
       <div class="copy">
-        <p>
-          {studio.name} is an independent video game developer and publisher. Since the first Dark Quest in {studio.founded},
-          we have built dungeon crawlers, gladiator epics, kingdoms to defend and worlds to blow apart, and taken every one
-          of them to {Object.values(PLATFORMS).slice(0, -1).join(', ')} and {Object.values(PLATFORMS).at(-1)}.
-        </p>
-        <p>Small studio. Big battles. Every game carries the seal.</p>
+        <StudioStory />
       </div>
     </div>
   </section>
