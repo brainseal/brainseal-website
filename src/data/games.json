@@ -52,6 +52,7 @@
     "steamAppId": 1309460,
     "released": "2025-02-18",
     "heroHasLogo": true,
+    "heroTagline": true,
     "genres": ["Physics", "Destruction", "Puzzle"],
     "tagline": "An epic journey of destruction.",
     "logline": "A physics-driven destruction puzzler",

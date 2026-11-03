@@ -25,6 +25,7 @@ export const games = data
       launchTime?: string;
       showcase?: boolean;
       heroHasLogo?: boolean;
+      heroTagline?: boolean;
       logline?: string;
     };
     // launchTime is the UTC unlock time on release day, when known; it drives the countdown.
@@ -38,6 +39,8 @@ export const games = data
       logline: extra.logline,
       // The key art already has the game's logo painted in, so the hero keeps it clear of text.
       heroHasLogo: extra.heroHasLogo ?? false,
+      // With painted-logo art, also show the tagline and summary under the art (as non-logo heroes do).
+      heroTagline: extra.heroTagline ?? false,
       hasLaunchTime: !!extra.launchTime,
       releaseDate,
       upcoming: releaseDate > now,

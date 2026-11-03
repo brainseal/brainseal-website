@@ -32,7 +32,7 @@ const units = [
 ---
 
 <section
-  class:list={['hero', { 'art-logo': game.heroHasLogo, centered: tiles }]}
+  class:list={['hero', { 'art-logo': game.heroHasLogo, 'with-text': game.heroHasLogo && game.heroTagline, centered: tiles }]}
   style={`--accent: ${game.accent}`}
   data-launch={countdown ? game.releaseDate.toISOString() : undefined}>
   <Image
@@ -71,7 +71,11 @@ const units = [
       }
       {
         game.heroHasLogo ? (
-          tiles ? <PlatformLinks game={game} /> : <StoreButtons game={game} primaryOnly />
+          <>
+            {game.heroTagline && <p class="tagline">{game.tagline}</p>}
+            {game.heroTagline && <p class="summary">{game.summary}</p>}
+            {tiles ? <PlatformLinks game={game} /> : <StoreButtons game={game} primaryOnly />}
+          </>
         ) : (
           <>
             <p class="tagline">{game.tagline}</p>
@@ -171,6 +175,10 @@ const units = [
   }
   .art-logo::before {
     background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.88) 20%, rgb(11 9 8 / 0.4) 36%, transparent 50%);
+  }
+  /* The tagline and summary make the block taller, so the shade reaches further up. */
+  .with-text::before {
+    background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.92) 26%, rgb(11 9 8 / 0.6) 40%, transparent 58%);
   }
   .art-logo {
     padding-bottom: clamp(32px, 4vw, 48px);
