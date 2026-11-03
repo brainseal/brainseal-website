@@ -17,7 +17,7 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
 
 <Base>
   <h1 class="visually-hidden">{studio.name}: video game developer and publisher</h1>
-  <GameHero game={featured} heading="h2" />
+  <GameHero game={featured} heading="h2" eyebrow={featured.upcoming ? 'New from Brain Seal' : 'Latest from Brain Seal'} />
 
   <section class="section featured" style={`--accent: ${featured.accent}`} aria-label={featured.title}>
     <div class="wrap">
