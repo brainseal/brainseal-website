@@ -32,6 +32,7 @@
     "heroHasLogo": true,
     "genres": ["RPG", "Turn-based", "Dungeon crawler"],
     "tagline": "Assemble your party. Conquer the dungeon.",
+    "logline": "A tactical turn-based dungeon crawler",
     "summary": "A turn based dungeon crawler where you create a party of heroes to go on epic quests.",
     "description": [
       "A turn based strategy adventure inspired by the legendary HeroQuest board game. Command up to 10 unique heroes, each with distinctive stats and powers, and train them in the Hero Camp to unlock new cards and abilities.",
@@ -53,6 +54,7 @@
     "released": "2025-02-18",
     "genres": ["Physics", "Destruction", "Puzzle"],
     "tagline": "An epic journey of destruction.",
+    "logline": "A physics-driven destruction puzzler",
     "summary": "A physics destruction game. Unlock new bombs, explore the world and go on an epic journey of destruction.",
     "description": [
       "Master seven unique bombs in a realistic physics simulation and explore over 70 levels of mayhem and destruction.",
@@ -74,6 +76,7 @@
     "released": "2024-11-06",
     "genres": ["Strategy", "Base defense", "Side-scroller"],
     "tagline": "Build. Defend. Conquer.",
+    "logline": "A side-scrolling kingdom strategy game",
     "summary": "A 2D side-scrolling strategy game of resource management, base defense and conquest.",
     "description": [
       "Unleash your strategic brilliance in this 2D side-scrolling strategy game, where you must build a base, manage resources, explore the mysterious forest and conquer your enemies."
@@ -94,6 +97,7 @@
     "released": "2024-02-21",
     "genres": ["Rogue-lite", "Auto shooter", "Survival"],
     "tagline": "Survive the grid for 20 minutes.",
+    "logline": "A neon rogue-lite survival shooter",
     "summary": "A rogue-lite auto shooter where you must survive for 20 minutes against waves of geometry ships.",
     "description": [
       "Fight against waves of geometry ships, defeat their formations and survive the grid world.",
@@ -115,6 +119,7 @@
     "released": "2023-05-24",
     "genres": ["RPG", "Rogue-lite", "Tabletop"],
     "tagline": "A new evil has risen in the East.",
+    "logline": "A rogue-lite tabletop dungeon adventure",
     "summary": "A rogue-lite tabletop that mixes card based exploration with turn based combat.",
     "description": [
       "Create your party, draw adventure cards, roll dice and fight monsters to defeat the sorcerer and his magic.",
@@ -136,6 +141,7 @@
     "released": "2019-11-27",
     "genres": ["Action", "Beat 'em up", "Arena"],
     "tagline": "Find your destiny in the sands of the colosseum.",
+    "logline": "A gladiator arena beat 'em up",
     "summary": "An arena beat 'em up where you take the role of a man in search of his destiny, only to find it in the sands of the colosseum.",
     "description": [
       "You are a common man who has lost everything in the wars with the Roman Empire. Your family is dead, your house has been burned down and your land is now under Roman rule.",
@@ -157,6 +163,7 @@
     "released": "2018-03-06",
     "genres": ["RPG", "Turn-based", "Dungeon crawler"],
     "tagline": "Into the Castle of Doom.",
+    "logline": "A dice-driven dungeon RPG inspired by HeroQuest",
     "summary": "A turn based RPG inspired by the legendary board game HeroQuest, with a hand-drawn isometric art style and dice based combat.",
     "description": [
       "Every outcome is decided by the roll of the dice. Each map is designed to take you through an adventure that will test your party's strength, courage and sanity.",
@@ -178,6 +185,7 @@
     "released": "2013-04-16",
     "genres": ["RPG", "Turn-based", "Dungeon crawler"],
     "tagline": "Where the legend began.",
+    "logline": "The turn-based dungeon crawler that started the saga",
     "summary": "A turn based dungeon crawler where you command a party of heroes on an epic quest to defeat the dark sorcerer. Now remastered for consoles.",
     "description": [
       "An evil sorcerer has appeared in the lands. He has built a dungeon in the nearby village of Darkwood, where his minions raid the surrounding villages to bring terror and death to all its citizens.",

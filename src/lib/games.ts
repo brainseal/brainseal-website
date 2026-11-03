@@ -45,7 +45,7 @@ export const games = data
       hero: art(game.slug, 'hero.jpg')!,
       cover: art(game.slug, 'cover.jpg')!,
       logo: art(game.slug, 'logo.png'),
-      shots: [1, 2, 3, 4].map((n) => art(game.slug, `shot-${n}.jpg`)).filter((s): s is ImageMetadata => !!s),
+      shots: [1, 2, 3, 4, 5, 6, 7, 8].map((n) => art(game.slug, `shot-${n}.jpg`)).filter((s): s is ImageMetadata => !!s),
     };
   })
   .sort((a, b) => b.releaseDate.getTime() - a.releaseDate.getTime());

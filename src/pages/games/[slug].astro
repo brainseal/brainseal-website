@@ -37,16 +37,22 @@ const jsonLd = {
 <Base title={game.title} description={game.summary} image={game.hero} jsonLd={jsonLd}>
   <GameHero game={game} eyebrow={game.upcoming ? 'Coming Soon!' : 'Available Now!'} launchedEyebrow="Available Now!" tiles />
 
-  <section class="section body" style={`--accent: ${game.accent}`}>
-    <div class="wrap layout">
+  <!-- Pitch, then the trailer at full stage width -->
+  <section class="section intro" style={`--accent: ${game.accent}`}>
+    <div class="wrap stage">
+      {game.logline && <p class="logline">{game.logline}</p>}
       <div id="trailer">
         <Trailer id={game.youtube} title={game.title} poster={game.shots[0] ?? game.hero} />
       </div>
-      <div class="about">
-        <span class="eyebrow">The game</span>
-        {game.heroHasLogo && <p>{game.summary}</p>}
-        {game.description.map((p) => <p>{p}</p>)}
-      </div>
+    </div>
+  </section>
+
+  <section class="section story">
+    <div class="wrap about">
+      <span class="eyebrow">The game</span>
+      {game.heroHasLogo && <h2>{game.tagline}</h2>}
+      {game.heroHasLogo && <p>{game.summary}</p>}
+      {game.description.map((p) => <p>{p}</p>)}
     </div>
   </section>
 
@@ -76,28 +82,50 @@ const jsonLd = {
 </Base>
 
 <style>
-  .body {
+  .intro {
+    padding-top: clamp(16px, 3vw, 40px);
+    padding-bottom: clamp(40px, 6vw, 72px);
+  }
+  .stage {
+    display: grid;
+    gap: clamp(20px, 3vw, 32px);
+    max-width: 1180px;
+  }
+  .story {
     padding-top: 0;
   }
-  /* Trailer beside the description, as in the homepage's featured section. */
-  .layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
-    gap: clamp(24px, 4vw, 56px);
-    align-items: center;
-  }
+  /* A centred reading column, matching the centred hero */
   .about {
     display: grid;
+    justify-items: center;
     gap: 4px;
+    max-width: 780px;
     font-size: 1.1rem;
+    text-align: center;
     color: #ddd4c6;
   }
   .about .eyebrow {
     margin-bottom: 12px;
   }
+  .about .eyebrow::after {
+    content: '';
+    width: 2.2em;
+    height: 1px;
+    background: currentColor;
+  }
+  .about h2 {
+    margin-bottom: 16px;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    text-transform: uppercase;
+    color: var(--text);
+  }
   .shots-section {
     border-top: 1px solid var(--line);
     background: var(--ink-2);
+  }
+  /* Same width as the trailer so the edges line up */
+  .shots-section .wrap {
+    max-width: 1180px;
   }
   .more-grid {
     display: grid;
@@ -105,9 +133,6 @@ const jsonLd = {
     gap: clamp(14px, 2.5vw, 32px);
   }
   @media (max-width: 960px) {
-    .layout {
-      grid-template-columns: 1fr;
-    }
     .more-grid {
       grid-template-columns: repeat(2, 1fr);
     }

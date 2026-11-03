@@ -5,7 +5,7 @@ import { readFile, writeFile, mkdir, access } from 'node:fs/promises';
 
 const games = JSON.parse(await readFile(new URL('../src/data/games.json', import.meta.url), 'utf8'));
 const force = process.argv.includes('--force');
-const SCREENSHOTS = 4;
+const SCREENSHOTS = 8;
 const cdn = (id, file) => `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${id}/${file}`;
 
 const exists = (path) => access(path).then(() => true, () => false);

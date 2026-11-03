@@ -4,23 +4,29 @@ import type { Game } from '../lib/games';
 
 interface Props {
   game: Game;
-  // One row of four (homepage) instead of a two-column grid (game page).
+  // One row of four (homepage) instead of the full gallery (game page).
   row?: boolean;
 }
 
 const { game, row = false } = Astro.props;
-const full = await Promise.all(game.shots.map((s) => getImage({ src: s, width: 1920 })));
+
+// The gallery always fills complete rows: 8 shows as 4×2; 6 or 7 as 3×2.
+const count = game.shots.length;
+const columns = row || count % 4 === 0 || count < 6 ? 4 : 3;
+const shown = row ? 4 : count - (count % columns);
+const shots = game.shots.slice(0, Math.max(shown, Math.min(count, 4)));
+const full = await Promise.all(shots.map((s) => getImage({ src: s, width: 1920 })));
 ---
 
-<div class:list={['shots', { row }]}>
+<div class="shots" style={`--columns: ${columns}`}>
   {
-    game.shots.map((shot, i) => (
+    shots.map((shot, i) => (
       <a href={full[i].src} data-shot>
         <Image
           src={shot}
           alt={`${game.title} screenshot ${i + 1}`}
-          widths={[480, 800]}
-          sizes={row ? '(max-width: 700px) 50vw, 25vw' : '(max-width: 700px) 100vw, 50vw'}
+          widths={[400, 640]}
+          sizes={`(max-width: 700px) 50vw, ${Math.round(100 / columns)}vw`}
         />
       </a>
     ))
@@ -50,11 +56,7 @@ const full = await Promise.all(game.shots.map((s) => getImage({ src: s, width: 1
 <style>
   .shots {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-  .row {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(var(--columns), 1fr);
     gap: 12px;
   }
   .shots a {
@@ -97,13 +99,9 @@ const full = await Promise.all(game.shots.map((s) => getImage({ src: s, width: 1
     cursor: pointer;
   }
   @media (max-width: 700px) {
-    .row {
+    .shots {
       grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (max-width: 600px) {
-    .shots:not(.row) {
-      grid-template-columns: 1fr;
+      gap: 8px;
     }
   }
 </style>
