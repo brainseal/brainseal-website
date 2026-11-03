@@ -147,11 +147,12 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     pointer-events: none;
     user-select: none;
   }
-  /* Heading on the left, studio text on the right, each centred within its column */
+  /* Heading on the left (only as wide as it needs), studio text on the right taking the rest,
+     each centred within its column */
   .studio {
     position: relative;
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: max-content 1fr;
     gap: clamp(24px, 5vw, 72px);
     align-items: center;
   }
