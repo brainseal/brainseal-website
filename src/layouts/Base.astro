@@ -1,0 +1,78 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import seal from '../assets/brand/seal.png';
+import { featured } from '../lib/games';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: ImageMetadata;
+  jsonLd?: object;
+}
+
+const {
+  title,
+  description = 'Brain Seal is an independent video game developer and publisher from London. Makers of Dominus Gladiatus, Dark Quest, Monarchy, Blow it up and Story of a Gladiator.',
+  image = featured.hero,
+  jsonLd,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | Brain Seal` : 'Brain Seal | Video Game Developer & Publisher';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = await getImage({ src: image, width: 1200, format: 'jpg' });
+const favicon = await getImage({ src: seal, width: 64, format: 'png' });
+const touchIcon = await getImage({ src: seal, width: 180, format: 'png' });
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="apple-touch-icon" href={touchIcon.src} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#0b0908" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Brain Seal" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage.src, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@brainseal" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .skip {
+    position: absolute;
+    left: 16px;
+    top: -60px;
+    z-index: 100;
+    padding: 10px 16px;
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .skip:focus {
+    top: 16px;
+  }
+</style>

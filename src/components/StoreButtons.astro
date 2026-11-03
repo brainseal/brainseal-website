@@ -1,0 +1,20 @@
+---
+import { PLATFORMS, platformsOf, type Game } from '../lib/games';
+
+interface Props {
+  game: Game;
+}
+
+const { game } = Astro.props;
+const platforms = platformsOf(game);
+---
+
+<div class="btn-row">
+  {
+    platforms.map((p, i) => (
+      <a class:list={['btn', { 'btn-primary': i === 0 }]} href={game.stores[p]} rel="noopener">
+        {p === 'steam' && game.upcoming ? 'Wishlist on Steam' : PLATFORMS[p]}
+      </a>
+    ))
+  }
+</div>

@@ -1,0 +1,168 @@
+---
+import { Image } from 'astro:assets';
+import StoreButtons from './StoreButtons.astro';
+import { formatDate, type Game } from '../lib/games';
+
+interface Props {
+  game: Game;
+  eyebrow?: string;
+  heading?: 'h1' | 'h2';
+  link?: boolean;
+}
+
+const { game, eyebrow, heading: Heading = 'h1', link = false } = Astro.props;
+const status = game.upcoming
+  ? `Launches ${formatDate(game.releaseDate)}`
+  : `Out now · Released ${game.year}`;
+---
+
+<section class="hero" style={`--accent: ${game.accent}`}>
+  <Image
+    class="bg"
+    src={game.hero}
+    alt=""
+    widths={[960, 1600, 2400]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="wrap content">
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <Heading class="title">
+      {
+        game.logo ? (
+          <Image src={game.logo} alt={game.title} widths={[480, 720]} sizes="(max-width: 600px) 80vw, 520px" loading="eager" />
+        ) : (
+          game.title
+        )
+      }
+    </Heading>
+    <p class="status"><span class="dot"></span>{status}</p>
+    <p class="tagline">{game.tagline}</p>
+    <p class="summary">{game.summary}</p>
+    <StoreButtons game={game} />
+    {link && <a class="more" href={`/games/${game.slug}/`}>Enter the arena →</a>}
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: min(100svh, 1000px);
+    padding-block: 140px clamp(56px, 9vw, 112px);
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .hero :global(.bg) {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
+    animation: drift 24s ease-out both;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgb(11 9 8 / 0.92) 0%, rgb(11 9 8 / 0.65) 40%, rgb(11 9 8 / 0.1) 75%),
+      linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.4) 35%, transparent 60%);
+  }
+  .content {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+  }
+  .content > * {
+    max-width: 620px;
+  }
+  .title {
+    font-size: clamp(2.8rem, 8vw, 5.6rem);
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #fff3d6, var(--gold-hi) 40%, var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 4px 24px rgb(0 0 0 / 0.7));
+  }
+  .title :global(img) {
+    width: min(520px, 80vw);
+    max-height: 260px;
+    object-fit: contain;
+    object-position: left center;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0 0;
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: var(--gold-hi);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--crimson-hi);
+    box-shadow: 0 0 0 4px rgb(217 42 47 / 0.25);
+    animation: pulse 2s infinite;
+  }
+  .tagline {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .summary {
+    margin: 0 0 12px;
+    color: #d8cfc1;
+  }
+  .more {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: var(--gold);
+    text-decoration: none;
+    margin-top: 4px;
+  }
+  .more:hover {
+    color: var(--gold-hi);
+  }
+  @keyframes drift {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  @keyframes pulse {
+    50% {
+      box-shadow: 0 0 0 8px rgb(217 42 47 / 0);
+    }
+  }
+  @media (max-width: 720px) {
+    .hero {
+      min-height: 92svh;
+    }
+    .hero :global(.bg) {
+      object-position: 60% 30%;
+    }
+    .hero::before {
+      background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.8) 45%, rgb(11 9 8 / 0.25) 100%);
+    }
+  }
+</style>

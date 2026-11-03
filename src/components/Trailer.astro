@@ -1,0 +1,100 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+  id: string;
+  title: string;
+  poster: ImageMetadata;
+}
+
+// Shows a local poster and only loads YouTube once the visitor presses play.
+const { id, title, poster } = Astro.props;
+---
+
+<div class="trailer" data-trailer={id}>
+  <Image src={poster} alt="" widths={[640, 960, 1280]} sizes="(max-width: 1240px) 100vw, 1160px" />
+  <button type="button" aria-label={`Play ${title} trailer`}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"></path></svg>
+  </button>
+  <span class="label">Watch the trailer</span>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-trailer]').forEach((el) => {
+    el.querySelector('button')!.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = `https://www.youtube-nocookie.com/embed/${el.dataset.trailer}?autoplay=1&rel=0`;
+      frame.title = 'Trailer';
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      frame.allowFullscreen = true;
+      el.replaceChildren(frame);
+    });
+  });
+</script>
+
+<style>
+  .trailer {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--line);
+    box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.9);
+  }
+  .trailer :global(img),
+  .trailer :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+  }
+  .trailer :global(img) {
+    filter: brightness(0.6) saturate(1.05);
+    transition: transform 0.6s, filter 0.4s;
+  }
+  .trailer:hover :global(img) {
+    transform: scale(1.03);
+    filter: brightness(0.7);
+  }
+  button {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: clamp(72px, 10vw, 104px);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--gold-hi);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--crimson-hi), var(--crimson));
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 0 10px rgb(179 25 31 / 0.25), 0 20px 40px -10px rgb(0 0 0 / 0.8);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 16px rgb(179 25 31 / 0.25), 0 20px 40px -10px rgb(0 0 0 / 0.8);
+  }
+  button svg {
+    width: 44%;
+    margin-left: 8%;
+  }
+  .label {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(16px, 4vw, 32px);
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--gold-hi);
+    pointer-events: none;
+  }
+</style>

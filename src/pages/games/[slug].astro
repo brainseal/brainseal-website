@@ -1,0 +1,256 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import GameHero from '../../components/GameHero.astro';
+import GameCard from '../../components/GameCard.astro';
+import Trailer from '../../components/Trailer.astro';
+import { games, formatDate, PLATFORMS, platformsOf, type Game } from '../../lib/games';
+
+export function getStaticPaths() {
+  return games.map((game) => ({ params: { slug: game.slug }, props: { game } }));
+}
+
+interface Props {
+  game: Game;
+}
+
+const { game } = Astro.props;
+const platforms = platformsOf(game).map((p) => PLATFORMS[p]);
+const others = games.filter((g) => g.slug !== game.slug).slice(0, 4);
+const fullShots = await Promise.all(game.shots.map((s) => getImage({ src: s, width: 1920 })));
+
+const facts = [
+  { label: game.upcoming ? 'Release date' : 'Released', value: formatDate(game.releaseDate) },
+  { label: 'Genre', value: game.genres.join(', ') },
+  { label: 'Platforms', value: platforms.join(', ') },
+  { label: 'Developer', value: 'Brain Seal Ltd' },
+  { label: 'Publisher', value: game.publisher ?? 'Brain Seal Ltd' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoGame',
+  name: game.title,
+  description: game.summary,
+  url: new URL(`/games/${game.slug}/`, Astro.site).href,
+  datePublished: game.released,
+  genre: game.genres,
+  gamePlatform: platforms,
+  author: { '@type': 'Organization', name: 'Brain Seal Ltd', url: Astro.site?.href },
+  publisher: { '@type': 'Organization', name: game.publisher ?? 'Brain Seal Ltd' },
+  trailer: { '@type': 'VideoObject', name: `${game.title} trailer`, embedUrl: `https://www.youtube.com/embed/${game.youtube}` },
+};
+---
+
+<Base title={game.title} description={game.summary} image={game.hero} jsonLd={jsonLd}>
+  <GameHero game={game} eyebrow="A Brain Seal game" />
+
+  <section class="section body" style={`--accent: ${game.accent}`}>
+    <div class="wrap layout">
+      <div class="main">
+        <div id="trailer">
+          <Trailer id={game.youtube} title={game.title} poster={game.shots[0] ?? game.hero} />
+        </div>
+        <div class="about">
+          <span class="eyebrow">The game</span>
+          {game.description.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+      <aside class="facts">
+        <dl>
+          {
+            facts.map((f) => (
+              <div>
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <iframe
+          class="steam"
+          src={`https://store.steampowered.com/widget/${game.steamAppId}/`}
+          title={`${game.title} on Steam`}
+          loading="lazy"></iframe>
+      </aside>
+    </div>
+  </section>
+
+  {
+    game.shots.length > 0 && (
+      <section class="section shots-section">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="eyebrow">Screenshots</span>
+            <h2>Into battle</h2>
+          </div>
+          <div class="shots">
+            {game.shots.map((shot, i) => (
+              <a href={fullShots[i].src} data-shot>
+                <Image src={shot} alt={`${game.title} screenshot ${i + 1}`} widths={[480, 800]} sizes="(max-width: 700px) 100vw, 50vw" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section more">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">More from Brain Seal</span>
+        <h2>Choose your next battle</h2>
+      </div>
+      <div class="more-grid">
+        {others.map((g) => <GameCard game={g} />)}
+      </div>
+    </div>
+  </section>
+
+  <dialog class="lightbox" data-lightbox>
+    <img alt="" />
+    <button type="button" aria-label="Close">×</button>
+  </dialog>
+</Base>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]')!;
+  const img = dialog.querySelector('img')!;
+  document.querySelectorAll<HTMLAnchorElement>('[data-shot]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      img.src = a.href;
+      img.alt = a.querySelector('img')?.alt ?? '';
+      dialog.showModal();
+    });
+  });
+  dialog.addEventListener('click', () => dialog.close());
+</script>
+
+<style>
+  .body {
+    padding-top: 0;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: start;
+  }
+  .main {
+    display: grid;
+    gap: clamp(32px, 5vw, 56px);
+  }
+  .about {
+    display: grid;
+    gap: 4px;
+    font-size: 1.1rem;
+    color: #ddd4c6;
+  }
+  .about .eyebrow {
+    margin-bottom: 12px;
+  }
+  .facts {
+    position: sticky;
+    top: 96px;
+    display: grid;
+    gap: 24px;
+  }
+  dl {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    background: var(--ink-2);
+  }
+  dl div {
+    padding: 14px 20px;
+  }
+  dl div + div {
+    border-top: 1px solid var(--line);
+  }
+  dt {
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  dd {
+    margin: 2px 0 0;
+    font-weight: 600;
+  }
+  .steam {
+    width: 100%;
+    height: 190px;
+    border: 0;
+  }
+  .shots-section {
+    border-top: 1px solid var(--line);
+    background: var(--ink-2);
+  }
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .shots a {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    aspect-ratio: 16 / 9;
+  }
+  .shots :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .shots a:hover :global(img) {
+    transform: scale(1.04);
+  }
+  .more-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(14px, 2.5vw, 32px);
+  }
+  .lightbox {
+    max-width: min(1600px, 96vw);
+    padding: 0;
+    border: 1px solid var(--line);
+    background: #000;
+  }
+  .lightbox::backdrop {
+    background: rgb(0 0 0 / 0.85);
+  }
+  .lightbox img {
+    max-height: 90vh;
+    width: auto;
+  }
+  .lightbox button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: rgb(0 0 0 / 0.6);
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+  @media (max-width: 960px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .facts {
+      position: static;
+    }
+    .more-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .shots {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

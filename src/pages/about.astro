@@ -1,0 +1,137 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { games, studio, PLATFORMS } from '../lib/games';
+
+const contacts = [
+  { label: 'Business & publishing', email: studio.email },
+  { label: 'Press', email: studio.email },
+  { label: 'Player support', email: studio.supportEmail },
+];
+---
+
+<Base title="About" description="Brain Seal is an independent video game developer and publisher from London, shipping games to Steam, Xbox, PlayStation and Nintendo Switch.">
+  <PageHeader eyebrow="About the studio" title="We are Brain Seal">
+    <p>An independent video game developer and publisher from London, making games with heart, dice and steel since {studio.founded}.</p>
+  </PageHeader>
+
+  <section class="section">
+    <div class="wrap story">
+      <div>
+        <h2>Our legend</h2>
+        <p>
+          It started with Dark Quest: one barbarian, one dungeon and one evil sorcerer. Inspired by the classic HeroQuest
+          board game, it grew into a saga of four games, and the studio grew with it.
+        </p>
+        <p>
+          Since then we have sent gladiators into the colosseum, built kingdoms to defend, filled the grid with geometry
+          ships and blown up whatever was left. Next, we hand you the keys to a gladiator school in Dominus Gladiatus.
+        </p>
+        <p>
+          We bring our games to {Object.values(PLATFORMS).slice(0, -1).join(', ')} and {Object.values(PLATFORMS).at(-1)},
+          because a good battle deserves the biggest arena.
+        </p>
+      </div>
+      <div class="covers" aria-hidden="true">
+        {games.slice(0, 6).map((g) => <Image src={g.cover} alt="" widths={[200, 300]} sizes="160px" />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Get in touch</span>
+        <h2>Send word to the studio</h2>
+      </div>
+      <ul class="contacts">
+        {
+          contacts.map((c) => (
+            <li>
+              <span>{c.label}</span>
+              <a href={`mailto:${c.email}`}>{c.email}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .story {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+  }
+  .story h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .story p {
+    color: #d8cfc1;
+    font-size: 1.1rem;
+  }
+  .covers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    transform: rotate(-3deg);
+  }
+  .covers :global(img) {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border: 1px solid var(--line);
+  }
+  .covers :global(img:nth-child(3n + 2)) {
+    transform: translateY(24px);
+  }
+  .contact {
+    border-top: 1px solid var(--line);
+    background: var(--ink-2);
+  }
+  .contacts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .contacts li {
+    display: grid;
+    gap: 6px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    background: var(--ink);
+  }
+  .contacts span {
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .contacts a {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .contacts a:hover {
+    color: var(--gold-hi);
+  }
+  @media (max-width: 800px) {
+    .story {
+      grid-template-columns: 1fr;
+    }
+    .covers {
+      transform: none;
+    }
+  }
+</style>

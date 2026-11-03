@@ -1,0 +1,163 @@
+---
+import Base from '../layouts/Base.astro';
+import GameHero from '../components/GameHero.astro';
+import GameCard from '../components/GameCard.astro';
+import Trailer from '../components/Trailer.astro';
+import { games, featured, studio, PLATFORMS } from '../lib/games';
+
+const years = new Date().getFullYear() - studio.founded;
+const stats = [
+  { value: games.length, label: 'Games forged' },
+  { value: studio.platforms, label: 'Platforms conquered' },
+  { value: years, label: 'Years in the arena' },
+];
+---
+
+<Base>
+  <h1 class="visually-hidden">Brain Seal: video game developer and publisher</h1>
+  <GameHero game={featured} heading="h2" eyebrow={featured.upcoming ? 'New from Brain Seal' : 'Latest from Brain Seal'} link />
+
+  <section class="section trailer-band">
+    <div class="wrap">
+      <Trailer id={featured.youtube} title={featured.title} poster={featured.shots[0] ?? featured.hero} />
+    </div>
+  </section>
+
+  <section class="section manifesto">
+    <div class="watermark" aria-hidden="true">Brain Seal</div>
+    <div class="wrap grid">
+      <div class="section-head">
+        <span class="eyebrow">The studio</span>
+        <h2>Forged in London.<br /><em>Fought on every platform.</em></h2>
+      </div>
+      <div class="copy">
+        <p>
+          Brain Seal is an independent video game developer and publisher. Since the first Dark Quest in {studio.founded},
+          we have built dungeon crawlers, gladiator epics, kingdoms to defend and worlds to blow apart, and taken every one
+          of them to {Object.values(PLATFORMS).slice(0, -1).join(', ')} and {Object.values(PLATFORMS).at(-1)}.
+        </p>
+        <p>Small studio. Big battles. Every game carries the seal.</p>
+        <a class="btn" href="/about/">About the studio</a>
+      </div>
+      <dl class="stats">
+        {
+          stats.map((s) => (
+            <div>
+              <dt>{s.label}</dt>
+              <dd>{s.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section games" id="games">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Our games</span>
+        <h2>The Hall of Glory</h2>
+      </div>
+      <div class="grid-games">
+        {games.map((game) => <GameCard game={game} />)}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .trailer-band {
+    padding-top: 0;
+  }
+  .manifesto {
+    position: relative;
+    overflow: hidden;
+    border-block: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse 50% 70% at 85% 50%, rgb(212 162 76 / 0.1), transparent 70%),
+      var(--ink-2);
+  }
+  .watermark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(5rem, 19vw, 17rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(212 162 76 / 0.09);
+    pointer-events: none;
+    user-select: none;
+  }
+  .grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(24px, 5vw, 72px);
+    align-items: start;
+  }
+  .manifesto h2 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .copy {
+    color: #d8cfc1;
+    padding-top: 6px;
+  }
+  .copy .btn {
+    margin-top: 12px;
+  }
+  .stats {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: clamp(16px, 4vw, 40px) 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .stats div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 6px;
+    padding: 28px 16px 0 0;
+  }
+  .stats div + div {
+    padding-left: clamp(16px, 3vw, 40px);
+    border-left: 1px solid var(--line);
+  }
+  .stats dt {
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .stats dd {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    line-height: 1;
+    background: linear-gradient(180deg, var(--gold-hi), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .grid-games {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(220px, 42vw), 1fr));
+    gap: clamp(20px, 3vw, 36px) clamp(14px, 2.5vw, 32px);
+  }
+  @media (max-width: 760px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .stats dt {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+    }
+  }
+</style>

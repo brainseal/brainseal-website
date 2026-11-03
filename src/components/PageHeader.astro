@@ -1,0 +1,45 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+}
+
+const { eyebrow, title } = Astro.props;
+---
+
+<header class="page-header">
+  <div class="wrap">
+    <span class="eyebrow">{eyebrow}</span>
+    <h1>{title}</h1>
+    <slot />
+  </div>
+</header>
+
+<style>
+  .page-header {
+    padding-block: 160px clamp(48px, 7vw, 88px);
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse 70% 90% at 20% 0%, rgb(179 25 31 / 0.25), transparent 70%),
+      var(--ink-2);
+  }
+  .wrap {
+    display: grid;
+    gap: 18px;
+    justify-items: start;
+  }
+  h1 {
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #fff3d6, var(--gold-hi) 40%, var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .wrap > :global(p) {
+    max-width: 640px;
+    margin: 0;
+    font-size: 1.15rem;
+    color: #d8cfc1;
+  }
+</style>

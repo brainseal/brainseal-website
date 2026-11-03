@@ -1,0 +1,186 @@
+[
+  {
+    "slug": "dominus-gladiatus",
+    "title": "Dominus Gladiatus",
+    "steamAppId": 3572090,
+    "released": "2026-11-05",
+    "genres": ["Strategy", "Management", "Auto-battler"],
+    "tagline": "Rome thirsts for blood.",
+    "summary": "A brutal gladiator management simulator. Recruit, train and equip gladiators and make life or death decisions throughout a deadly tournament against rival Domini.",
+    "description": [
+      "Take control of a gladiator school, recruit men from the markets, forge them into gladiators, and prepare them for the brutal arenas of Rome.",
+      "Build your Ludus, manage your roster, and make decisions that can mean life or death on your road to becoming Rome's greatest Dominus. Six Domini compete for prestige, power and survival through a deadly 160-day tournament. In Rome, only one name will be remembered."
+    ],
+    "youtube": "7HURROOGv6w",
+    "accent": "#d4a24c",
+    "publisher": "PlayWay S.A.",
+    "stores": {
+      "steam": "https://store.steampowered.com/app/3572090/Dominus_Gladiatus/"
+    }
+  },
+  {
+    "slug": "dark-quest-4",
+    "title": "Dark Quest 4",
+    "steamAppId": 2453840,
+    "released": "2025-11-05",
+    "genres": ["RPG", "Turn-based", "Dungeon crawler"],
+    "tagline": "Assemble your party. Conquer the dungeon.",
+    "summary": "A turn based dungeon crawler where you create a party of heroes to go on epic quests.",
+    "description": [
+      "A turn based strategy adventure inspired by the legendary HeroQuest board game. Command up to 10 unique heroes, each with distinctive stats and powers, and train them in the Hero Camp to unlock new cards and abilities.",
+      "Embark on 30 handcrafted quests filled with tactical, turn based combat, alone or with friends in local co-op for up to three players."
+    ],
+    "youtube": "sS10XHOZXSw",
+    "accent": "#e2692c",
+    "stores": {
+      "steam": "https://store.steampowered.com/app/2453840/Dark_Quest_4/",
+      "xbox": "https://www.xbox.com/en-US/games/store/dark-quest-4/9P90X29QXQ7L",
+      "playstation": "https://store.playstation.com/en-us/concept/10014878",
+      "switch": "https://www.nintendo.com/us/store/products/dark-quest-4-switch/"
+    }
+  },
+  {
+    "slug": "blow-it-up",
+    "title": "Blow it up",
+    "steamAppId": 1309460,
+    "released": "2025-02-18",
+    "genres": ["Physics", "Destruction", "Puzzle"],
+    "tagline": "An epic journey of destruction.",
+    "summary": "A physics destruction game. Unlock new bombs, explore the world and go on an epic journey of destruction.",
+    "description": [
+      "Master seven unique bombs in a realistic physics simulation and explore over 70 levels of mayhem and destruction.",
+      "With Steamworks integration you can play custom levels, or unleash your creativity in Creator Mode to build your own explosive puzzles."
+    ],
+    "youtube": "lpOc9duVdO4",
+    "accent": "#f2b134",
+    "stores": {
+      "steam": "https://store.steampowered.com/app/1309460/Blow_it_up/",
+      "xbox": "https://www.xbox.com/en-US/games/store/blow-it-up/9PHB5G6JTZBR",
+      "playstation": "https://store.playstation.com/en-us/product/EP3921-PPSA27526_00-0861422619960663",
+      "switch": "https://www.nintendo.com/us/store/products/blow-it-up-switch/"
+    }
+  },
+  {
+    "slug": "monarchy",
+    "title": "Monarchy",
+    "steamAppId": 2391650,
+    "released": "2024-11-06",
+    "genres": ["Strategy", "Base defense", "Side-scroller"],
+    "tagline": "Build. Defend. Conquer.",
+    "summary": "A 2D side-scrolling strategy game of resource management, base defense and conquest.",
+    "description": [
+      "Unleash your strategic brilliance in this 2D side-scrolling strategy game, where you must build a base, manage resources, explore the mysterious forest and conquer your enemies."
+    ],
+    "youtube": "phLHrJOX2GM",
+    "accent": "#4f8ad8",
+    "stores": {
+      "steam": "https://store.steampowered.com/app/2391650/Monarchy/",
+      "xbox": "https://www.xbox.com/en-US/games/store/monarchy/9NJR4CSDR0ZT",
+      "playstation": "https://store.playstation.com/en-us/concept/10009617",
+      "switch": "https://www.nintendo.com/us/store/products/monarchy-switch/"
+    }
+  },
+  {
+    "slug": "geometry-survivor",
+    "title": "Geometry Survivor",
+    "steamAppId": 2489010,
+    "released": "2024-02-21",
+    "genres": ["Rogue-lite", "Auto shooter", "Survival"],
+    "tagline": "Survive the grid for 20 minutes.",
+    "summary": "A rogue-lite auto shooter where you must survive for 20 minutes against waves of geometry ships.",
+    "description": [
+      "Fight against waves of geometry ships, defeat their formations and survive the grid world.",
+      "Unlock innovative upgrades in the shop, acquire new ships and conquer the unforgiving grid."
+    ],
+    "youtube": "ogtemkrXtqw",
+    "accent": "#a463ff",
+    "stores": {
+      "steam": "https://store.steampowered.com/app/2489010/Geometry_Survivor/",
+      "xbox": "https://www.xbox.com/en-US/games/store/geometry-survivor/9N5J4VGZQ80K",
+      "playstation": "https://store.playstation.com/en-us/concept/10009616",
+      "switch": "https://www.nintendo.com/us/store/products/geometry-survivor-switch/"
+    }
+  },
+  {
+    "slug": "dark-quest-3",
+    "title": "Dark Quest 3",
+    "steamAppId": 1185490,
+    "released": "2023-05-24",
+    "genres": ["RPG", "Rogue-lite", "Tabletop"],
+    "tagline": "A new evil has risen in the East.",
+    "summary": "A rogue-lite tabletop that mixes card based exploration with turn based combat.",
+    "description": [
+      "Create your party, draw adventure cards, roll dice and fight monsters to defeat the sorcerer and his magic.",
+      "“Heed my warning well, friends. A new evil has risen in the East. A power-hungry sorcerer of chaos magic is laying siege to the realm. You are heroes, one and all. And without you, all hope is lost.”"
+    ],
+    "youtube": "I22_hhNco-w",
+    "accent": "#7d5cff",
+    "stores": {
+      "steam": "https://store.steampowered.com/app/1185490/Dark_Quest_3/",
+      "xbox": "https://www.xbox.com/en-US/games/store/dark-quest-3/9nhljf3ljnqb",
+      "switch": "https://www.nintendo.com/us/store/products/dark-quest-3-switch/"
+    }
+  },
+  {
+    "slug": "story-of-a-gladiator",
+    "title": "Story of a Gladiator",
+    "steamAppId": 848060,
+    "released": "2019-11-27",
+    "genres": ["Action", "Beat 'em up", "Arena"],
+    "tagline": "Find your destiny in the sands of the colosseum.",
+    "summary": "An arena beat 'em up where you take the role of a man in search of his destiny, only to find it in the sands of the colosseum.",
+    "description": [
+      "You are a common man who has lost everything in the wars with the Roman Empire. Your family is dead, your house has been burned down and your land is now under Roman rule.",
+      "Fight waves of enemies in the arena to earn coin and fame until you are strong enough to enter the colosseum and become champion. Fate has finally revealed itself. Are you ready to accept it?"
+    ],
+    "youtube": "3I8e9BznhyM",
+    "accent": "#c8873a",
+    "stores": {
+      "steam": "https://store.steampowered.com/app/848060/Story_of_a_Gladiator/",
+      "xbox": "https://www.xbox.com/en-US/games/store/story-of-a-gladiator/9MZLL81KTDP6",
+      "playstation": "https://store.playstation.com/en-us/product/UP4140-CUSA16373_00-STORYOFGLADIATOR",
+      "switch": "https://www.nintendo.com/us/store/products/story-of-a-gladiator-switch/"
+    }
+  },
+  {
+    "slug": "dark-quest-2",
+    "title": "Dark Quest 2",
+    "steamAppId": 453690,
+    "released": "2018-03-06",
+    "genres": ["RPG", "Turn-based", "Dungeon crawler"],
+    "tagline": "Into the Castle of Doom.",
+    "summary": "A turn based RPG inspired by the legendary board game HeroQuest, with a hand-drawn isometric art style and dice based combat.",
+    "description": [
+      "Every outcome is decided by the roll of the dice. Each map is designed to take you through an adventure that will test your party's strength, courage and sanity.",
+      "Go deeper and deeper into the castle in search of the chambers of the evil sorcerer."
+    ],
+    "youtube": "QYuo6ZOQKHY",
+    "accent": "#c4302b",
+    "stores": {
+      "steam": "https://store.steampowered.com/app/453690/Dark_Quest_2/",
+      "xbox": "https://www.xbox.com/en-US/games/store/dark-quest-2/9NBLGGH3SWJ3",
+      "playstation": "https://store.playstation.com/en-us/product/UP4140-CUSA15909_00-DQ25778149429664",
+      "switch": "https://www.nintendo.com/us/store/products/dark-quest-2-switch/"
+    }
+  },
+  {
+    "slug": "dark-quest",
+    "title": "Dark Quest",
+    "steamAppId": 342860,
+    "released": "2015-01-21",
+    "genres": ["RPG", "Turn-based", "Dungeon crawler"],
+    "tagline": "Where the legend began.",
+    "summary": "A turn based dungeon crawler where you command a party of heroes on an epic quest to defeat the dark sorcerer. Now remastered for consoles.",
+    "description": [
+      "An evil sorcerer has appeared in the lands. He has built a dungeon in the nearby village of Darkwood, where his minions raid the surrounding villages to bring terror and death to all its citizens.",
+      "A hero by the name of Zantor dares to defy the powers of the sorcerer and seeks to destroy the dungeon. Dark Quest: Remastered brings the original adventure to PlayStation and Nintendo Switch."
+    ],
+    "youtube": "4nMv2HosFLw",
+    "accent": "#3fa66b",
+    "stores": {
+      "steam": "https://store.steampowered.com/app/342860/Dark_Quest/",
+      "playstation": "https://store.playstation.com/en-us/concept/10018017",
+      "switch": "https://www.nintendo.com/us/store/products/dark-quest-remastered-switch/"
+    }
+  }
+]
