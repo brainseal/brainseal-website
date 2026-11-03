@@ -4,6 +4,7 @@ import GameHero from '../../components/GameHero.astro';
 import GameCard from '../../components/GameCard.astro';
 import Trailer from '../../components/Trailer.astro';
 import Screenshots from '../../components/Screenshots.astro';
+import PlatformLinks from '../../components/PlatformLinks.astro';
 import { games, formatDate, PLATFORMS, platformsOf, studio, type Game } from '../../lib/games';
 import { url } from '../../lib/url';
 
@@ -56,6 +57,8 @@ const jsonLd = {
           <span class="eyebrow">The game</span>
           {game.heroHasLogo && <p>{game.summary}</p>}
           {game.description.map((p) => <p>{p}</p>)}
+          {/* The logo-art hero only carries the main store button, so list every platform here. */}
+          {game.heroHasLogo && <div class="platforms"><PlatformLinks game={game} /></div>}
         </div>
       </div>
       <aside class="facts">
@@ -127,6 +130,9 @@ const jsonLd = {
   }
   .about .eyebrow {
     margin-bottom: 12px;
+  }
+  .about .platforms {
+    margin-top: 12px;
   }
   .facts {
     position: sticky;

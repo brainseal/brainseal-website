@@ -5,9 +5,9 @@ import GameCard from '../components/GameCard.astro';
 import Trailer from '../components/Trailer.astro';
 import Showcase from '../components/Showcase.astro';
 import Screenshots from '../components/Screenshots.astro';
-import PlatformIcon from '../components/PlatformIcon.astro';
+import PlatformLinks from '../components/PlatformLinks.astro';
 import StudioStory from '../components/StudioStory.astro';
-import { games, featured, studio, platformsOf, PLATFORMS } from '../lib/games';
+import { games, featured, studio } from '../lib/games';
 
 // Optional full-screen bands for games flagged `"showcase": true` in games.json (none right now).
 // The featured game is chapter I; showcased games follow in release order.
@@ -29,26 +29,8 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
         </div>
       </div>
       {featured.shots.length > 0 && <Screenshots game={featured} row />}
-      <div class="platform-links">
-        <ul>
-          {
-            platformsOf(featured).map((p) => (
-              <li>
-                {featured.stores[p] ? (
-                  <a href={featured.stores[p]} rel="noopener">
-                    <PlatformIcon platform={p} decorative />
-                    <span>{PLATFORMS[p]}</span>
-                  </a>
-                ) : (
-                  <span class="unlinked">
-                    <PlatformIcon platform={p} decorative />
-                    <span>{PLATFORMS[p]}</span>
-                  </span>
-                )}
-              </li>
-            ))
-          }
-        </ul>
+      <div class="platforms">
+        <PlatformLinks game={featured} />
       </div>
     </div>
   </section>
@@ -119,46 +101,11 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
   .pitch p {
     color: #d8cfc1;
   }
-  .platform-links {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+  .platforms {
     margin-top: clamp(20px, 3vw, 32px);
   }
-  .platform-links ul {
-    display: flex;
-    flex-wrap: wrap;
+  .platforms :global(.platform-links) {
     justify-content: center;
-    gap: 10px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .platform-links a,
-  .platform-links .unlinked {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 48px;
-    padding: 10px 18px;
-    border: 1px solid var(--line);
-    background: var(--ink-2);
-    color: var(--gold);
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .platform-links :global(.platform-icon) {
-    font-size: 22px;
-  }
-  .platform-links a:hover {
-    color: var(--gold-hi);
-    border-color: var(--gold);
   }
   .games {
     border-top: 1px solid var(--line);
