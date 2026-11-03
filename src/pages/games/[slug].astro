@@ -53,9 +53,10 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="section story">
-    <div class="wrap about">
-      <span class="eyebrow">The game</span>
+  <!-- The game's story and its screenshots share one panel -->
+  <section class="section shots-section">
+    <div class="wrap">
+      <div class="about">
       {
         story.length > 0 ? (
           story.map((b) =>
@@ -79,21 +80,10 @@ const jsonLd = {
           </>
         )
       }
+      </div>
+      {game.shots.length > 0 && <Screenshots game={game} />}
     </div>
   </section>
-
-  {
-    game.shots.length > 0 && (
-      <section class="section shots-section">
-        <div class="wrap">
-          <div class="section-head">
-            <span class="eyebrow">Screenshots</span>
-          </div>
-          <Screenshots game={game} />
-        </div>
-      </section>
-    )
-  }
 
   <section class="section more">
     <div class="wrap">
@@ -117,25 +107,15 @@ const jsonLd = {
     gap: clamp(20px, 3vw, 32px);
     max-width: 1180px;
   }
-  .story {
-    padding-top: 0;
-  }
-  /* A reading column centred on the page; long text and lists read best left-aligned. */
+  /* A reading column centred in the panel, above the screenshots; long text and lists read best left-aligned. */
   .about {
     max-width: 780px;
+    margin: 0 auto clamp(40px, 6vw, 64px);
     font-size: 1.1rem;
     color: #ddd4c6;
   }
-  .about .eyebrow {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 8px;
-  }
-  .about .eyebrow::after {
-    content: '';
-    width: 2.2em;
-    height: 1px;
-    background: currentColor;
+  .about > :first-child {
+    margin-top: 0;
   }
   .about h3 {
     margin: 1.8em 0 0.6em;
