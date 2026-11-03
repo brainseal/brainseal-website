@@ -16,7 +16,11 @@ const links = [
   <div class="wrap bar">
     <a class="brand" href={url('/')} aria-label={`${studio.name} home`}>
       <Image src={seal} alt="" width={44} height={44} loading="eager" />
-      <span class="wordmark">Brain Seal<small>Entertainment</small></span>
+      <span class="wordmark">
+        <span class="name">Brain Seal</span>
+        <!-- One span per letter so the line can be spread to exactly the width of "Brain Seal" -->
+        <small>{[...'Entertainment'].map((c) => <span>{c}</span>)}</small>
+      </span>
     </a>
     <nav aria-label="Main">
       {links.map((l) => <a href={l.href} class:list={[l.hide && `hide-${l.hide}`]}>{l.label}</a>)}
@@ -69,22 +73,29 @@ const links = [
     transform: rotate(-12deg) scale(1.05);
   }
   .wordmark {
+    --tracking: 0.14em;
     display: grid;
     font-family: var(--display);
     font-weight: 900;
     font-size: 1.3rem;
     line-height: 1.05;
-    letter-spacing: 0.14em;
+    letter-spacing: var(--tracking);
     text-transform: uppercase;
     background: linear-gradient(180deg, var(--gold-hi), var(--gold));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
+  .wordmark .name {
+    /* Cancel the trailing letter-spacing so the right edge sits on the final L */
+    margin-right: calc(-1 * var(--tracking));
+  }
   .wordmark small {
+    display: flex;
+    justify-content: space-between;
     font-size: 0.5em;
     font-weight: 700;
-    letter-spacing: 0.42em;
+    letter-spacing: 0;
   }
   nav {
     display: flex;
@@ -141,8 +152,8 @@ const links = [
       height: 36px;
     }
     .wordmark {
+      --tracking: 0.1em;
       font-size: 0.95rem;
-      letter-spacing: 0.1em;
       white-space: nowrap;
     }
     nav {
@@ -160,9 +171,6 @@ const links = [
     }
   }
   @media (max-width: 400px) {
-    .wordmark small {
-      letter-spacing: 0.3em;
-    }
     nav .hide-xs {
       display: none;
     }
