@@ -68,9 +68,8 @@ const downloads = (game: (typeof games)[number]) => [
 
   <section class="section games">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Game assets</span>
-        <h2>The armoury</h2>
+      <div class="section-head assets-head">
+        <h2>Game Assets</h2>
       </div>
       <ul class="kit">
         {
@@ -203,6 +202,10 @@ const downloads = (game: (typeof games)[number]) => [
     margin: 0;
     font-weight: 600;
   }
+  .assets-head {
+    justify-items: center;
+    text-align: center;
+  }
   .games {
     border-top: 1px solid var(--line);
     background: var(--ink-2);
@@ -229,6 +232,10 @@ const downloads = (game: (typeof games)[number]) => [
     flex: none;
     object-fit: cover;
     border: 1px solid var(--line);
+  }
+  /* Let the text column shrink beside the cover on narrow phones instead of pushing the page wider */
+  .info {
+    min-width: 0;
   }
   .info h3 {
     font-size: 1.15rem;
@@ -259,7 +266,8 @@ const downloads = (game: (typeof games)[number]) => [
   }
   .files .shots {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 6px 10px;
     color: var(--muted);
     font-family: var(--display);
     font-weight: 700;

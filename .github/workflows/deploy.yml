@@ -3,9 +3,11 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  # Daily rebuild so "Coming soon" games switch to "Out now" on their release date.
+  # Daily rebuilds so "Coming soon" games switch to "Out now" on their release date: just after
+  # midnight UTC, and again just after 18:00 UTC (10am Pacific, the usual Steam unlock time).
   schedule:
     - cron: '15 0 * * *'
+    - cron: '15 18 * * *'
   workflow_dispatch:
 
 permissions:
