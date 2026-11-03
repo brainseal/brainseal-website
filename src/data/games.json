@@ -212,7 +212,7 @@
     "slug": "masters-of-belial",
     "title": "Masters of Belial",
     "released": "2007-11",
-    "ghost": true,
+    "hidden": true,
     "genres": ["Action RPG", "Arena", "Multiplayer"],
     "tagline": "Where the legend of Brain Seal began.",
     "logline": "The arena action RPG that started it all",

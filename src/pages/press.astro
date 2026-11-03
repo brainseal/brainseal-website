@@ -77,7 +77,9 @@ const downloads = (game: (typeof games)[number]) => [
             <li style={`--accent: ${game.accent}`}>
               <Image src={game.cover} alt="" widths={[160, 240]} sizes="120px" />
               <div class="info">
-                <h3>{game.ghost ? game.title : <a href={url(`/games/${game.slug}/`)}>{game.title}</a>}</h3>
+                <h3>
+                  <a href={url(`/games/${game.slug}/`)}>{game.title}</a>
+                </h3>
                 <p>
                   {game.upcoming ? `Launches ${formatDate(game.releaseDate)}` : `Released ${game.releasedLabel}`} ·{' '}
                   {(game.formerPlatforms ?? platformsOf(game).map((p) => PLATFORMS[p])).join(', ')}

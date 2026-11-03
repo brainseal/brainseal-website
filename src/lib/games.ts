@@ -22,7 +22,10 @@ const reviews = await fetchReviews(data.map((g) => g.steamAppId).filter((id): id
 // Release status is decided at build time; the deploy workflow rebuilds daily so launches flip on their own.
 const now = new Date();
 
+// A game with "hidden": true in games.json is left off the site entirely (no card, page or press
+// kit entry); its data and art stay in the project, ready to switch back on.
 export const games = data
+  .filter((game) => !(game as { hidden?: boolean }).hidden)
   .map((game) => {
     const extra = game as {
       publisher?: string;
@@ -32,7 +35,6 @@ export const games = data
       heroArtBottom?: boolean;
       logline?: string;
       formerPlatforms?: string[];
-      ghost?: boolean;
     };
     // "released" is a full date, or just "YYYY-MM" when only the month is known (older games).
     // launchTime is the UTC unlock time on release day, when known; it drives the countdown.
@@ -58,8 +60,6 @@ export const games = data
       // formerPlatforms then says where they were released, e.g. "Xbox Live Indie Games".
       inStores: Object.values(game.stores).some(Boolean),
       formerPlatforms: extra.formerPlatforms,
-      // Shown as a dimmed, unclickable card with no page of its own (e.g. a game being brought back).
-      ghost: extra.ghost ?? false,
       upcoming: releaseDate > now,
       year: releaseDate.getUTCFullYear(),
       hero: art(game.slug, 'hero.jpg')!,
