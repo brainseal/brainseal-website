@@ -144,6 +144,7 @@
     "title": "Story of a Gladiator",
     "steamAppId": 848060,
     "released": "2019-11-27",
+    "heroHasLogo": true,
     "genres": ["Action", "Beat 'em up", "Arena"],
     "tagline": "Find your destiny in the sands of the colosseum.",
     "logline": "A gladiator arena beat 'em up",
