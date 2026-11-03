@@ -51,6 +51,7 @@
     "title": "Blow it up",
     "steamAppId": 1309460,
     "released": "2025-02-18",
+    "heroHasLogo": true,
     "genres": ["Physics", "Destruction", "Puzzle"],
     "tagline": "An epic journey of destruction.",
     "logline": "A physics-driven destruction puzzler",
