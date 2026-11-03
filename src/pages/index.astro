@@ -67,7 +67,7 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     <div class="watermark" aria-hidden="true">Brain Seal</div>
     <div class="wrap studio">
       <div class="section-head">
-        <h2>Small Studio.<br /><em>Big Adventures.</em></h2>
+        <h2><span>Small Studio</span><em>Big Adventures</em></h2>
       </div>
       <div class="copy">
         <StudioStory />
@@ -159,6 +159,15 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     justify-items: center;
     margin-bottom: 0;
     text-align: center;
+  }
+  /* Always exactly two lines: each phrase stays on one line, sized to fit its column */
+  .manifesto h2 {
+    font-size: clamp(1.7rem, 3.4vw, 3rem);
+  }
+  .manifesto h2 span,
+  .manifesto h2 em {
+    display: block;
+    white-space: nowrap;
   }
   .manifesto h2 em {
     font-style: normal;
