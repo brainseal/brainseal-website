@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import GameHero from '../../components/GameHero.astro';
 import GameCard from '../../components/GameCard.astro';
 import Trailer from '../../components/Trailer.astro';
-import { games, formatDate, PLATFORMS, platformsOf, type Game } from '../../lib/games';
+import { games, formatDate, PLATFORMS, platformsOf, studio, type Game } from '../../lib/games';
 import { url } from '../../lib/url';
 
 export function getStaticPaths() {
@@ -24,8 +24,9 @@ const facts = [
   { label: game.upcoming ? 'Release date' : 'Released', value: formatDate(game.releaseDate) },
   { label: 'Genre', value: game.genres.join(', ') },
   { label: 'Platforms', value: platforms.join(', ') },
-  { label: 'Developer', value: 'Brain Seal Ltd' },
-  { label: 'Publisher', value: game.publisher ?? 'Brain Seal Ltd' },
+  { label: 'Developer', value: studio.name },
+  { label: 'Publisher', value: game.publisher ?? studio.name },
+  ...(game.review ? [{ label: 'Steam reviews', value: `${game.review.label} · ${game.review.percent}% of ${game.review.count.toLocaleString('en-GB')}` }] : []),
 ];
 
 const jsonLd = {
@@ -37,14 +38,14 @@ const jsonLd = {
   datePublished: game.released,
   genre: game.genres,
   gamePlatform: platforms,
-  author: { '@type': 'Organization', name: 'Brain Seal Ltd', url: Astro.site?.href },
-  publisher: { '@type': 'Organization', name: game.publisher ?? 'Brain Seal Ltd' },
+  author: { '@type': 'Organization', name: studio.name, legalName: studio.legalName, url: Astro.site?.href },
+  publisher: { '@type': 'Organization', name: game.publisher ?? studio.name },
   trailer: { '@type': 'VideoObject', name: `${game.title} trailer`, embedUrl: `https://www.youtube.com/embed/${game.youtube}` },
 };
 ---
 
 <Base title={game.title} description={game.summary} image={game.hero} jsonLd={jsonLd}>
-  <GameHero game={game} eyebrow="A Brain Seal game" />
+  <GameHero game={game} eyebrow="A Brain Seal Entertainment game" />
 
   <section class="section body" style={`--accent: ${game.accent}`}>
     <div class="wrap layout">

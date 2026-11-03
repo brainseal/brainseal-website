@@ -17,11 +17,15 @@ npm run build        # production build into dist/
    - `youtube`: the trailer's video ID (the part after `watch?v=`)
    - `stores`: any of `steam`, `xbox`, `playstation`, `switch`; leave a platform out to hide its button
    - `accent`: a highlight colour for that game's page
-   - `publisher`: only needed when the publisher is not Brain Seal Ltd
+   - `publisher`: only needed when the publisher is not Brain Seal Entertainment
+   - `launchTime`: the UTC time the game unlocks on release day (e.g. `"18:00"`). When set, the homepage shows a live countdown.
+   - `showcase`: `true` gives the game a full-screen band on the homepage under "Battles already won"
 2. Run `npm run fetch-art` to download the key art, logo, cover and screenshots from Steam into `src/assets/games/<slug>/`. Replace any file there with your own art if you prefer; keep the same file name.
 3. Commit and push. The site rebuilds and goes live in about a minute.
 
 Games with a future `released` date show "Coming soon" and "Wishlist on Steam". The site rebuilds every night, so on launch day they switch to "Out now" by themselves.
+
+Steam review badges ("Very Positive" and so on) are fetched from Steam on every build. Only Mostly Positive or better are shown.
 
 ## Pages
 
@@ -30,6 +34,7 @@ Games with a future `released` date show "Coming soon" and "Wishlist on Steam". 
 | `/` | `src/pages/index.astro` |
 | `/games/<slug>/` | `src/pages/games/[slug].astro` (one page per game) |
 | `/about/` | `src/pages/about.astro` |
+| `/press/` | `src/pages/press.astro` (fact sheet and asset downloads for press) |
 | `/privacy-policy/` | `src/pages/privacy-policy.astro`. Store listings link here, so keep this path. |
 
 ## Going live (one-time setup)

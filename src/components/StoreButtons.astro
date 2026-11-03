@@ -12,7 +12,11 @@ const platforms = platformsOf(game);
 <div class="btn-row">
   {
     platforms.map((p, i) => (
-      <a class:list={['btn', { 'btn-primary': i === 0 }]} href={game.stores[p]} rel="noopener">
+      <a
+        class:list={['btn', { 'btn-primary': i === 0 }]}
+        href={game.stores[p]}
+        rel="noopener"
+        data-wishlist={p === 'steam' && game.upcoming ? '' : undefined}>
         {p === 'steam' && game.upcoming ? 'Wishlist on Steam' : PLATFORMS[p]}
       </a>
     ))

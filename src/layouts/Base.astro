@@ -5,7 +5,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import seal from '../assets/brand/seal.png';
-import { featured } from '../lib/games';
+import { featured, studio } from '../lib/games';
 import { url } from '../lib/url';
 
 interface Props {
@@ -17,12 +17,12 @@ interface Props {
 
 const {
   title,
-  description = 'Brain Seal is an independent video game developer and publisher from London. Makers of Dominus Gladiatus, Dark Quest, Monarchy, Blow it up and Story of a Gladiator.',
+  description = 'Brain Seal Entertainment is an independent video game developer and publisher from London. Makers of Dominus Gladiatus, Dark Quest, Monarchy, Blow it up and Story of a Gladiator.',
   image = featured.hero,
   jsonLd,
 } = Astro.props;
 
-const fullTitle = title ? `${title} | Brain Seal` : 'Brain Seal | Video Game Developer & Publisher';
+const fullTitle = title ? `${title} | ${studio.name}` : `${studio.name} | Video Game Developer & Publisher`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = await getImage({ src: image, width: 1200, format: 'jpg' });
 const favicon = await getImage({ src: seal, width: 64, format: 'png' });
@@ -43,7 +43,7 @@ const touchIcon = await getImage({ src: seal, width: 180, format: 'png' });
     <meta name="theme-color" content="#0b0908" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Brain Seal" />
+    <meta property="og:site_name" content={studio.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />

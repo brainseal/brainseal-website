@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import StoreButtons from './StoreButtons.astro';
+import ReviewBadge from './ReviewBadge.astro';
 import { formatDate, type Game } from '../lib/games';
 import { url } from '../lib/url';
 
@@ -15,9 +16,16 @@ const { game, eyebrow, heading: Heading = 'h1', link = false } = Astro.props;
 const status = game.upcoming
   ? `Launches ${formatDate(game.releaseDate)}`
   : `Out now · Released ${game.year}`;
+const countdown = game.upcoming && game.hasLaunchTime;
+const units = [
+  ['d', 'Days'],
+  ['h', 'Hours'],
+  ['m', 'Minutes'],
+  ['s', 'Seconds'],
+];
 ---
 
-<section class="hero" style={`--accent: ${game.accent}`}>
+<section class="hero" style={`--accent: ${game.accent}`} data-launch={countdown ? game.releaseDate.toISOString() : undefined}>
   <Image
     class="bg"
     src={game.hero}
@@ -38,13 +46,54 @@ const status = game.upcoming
         )
       }
     </Heading>
-    <p class="status"><span class="dot"></span>{status}</p>
+    <p class="status"><span class="dot"></span><span data-status>{status}</span></p>
+    {
+      countdown && (
+        <div class="countdown" data-countdown hidden>
+          {units.map(([unit, label]) => (
+            <div>
+              <span data-unit={unit}>00</span>
+              <small>{label}</small>
+            </div>
+          ))}
+        </div>
+      )
+    }
     <p class="tagline">{game.tagline}</p>
     <p class="summary">{game.summary}</p>
+    {game.review && <ReviewBadge review={game.review} />}
     <StoreButtons game={game} />
     {link && <a class="more" href={url(`/games/${game.slug}/`)}>Enter the arena →</a>}
   </div>
 </section>
+
+<script>
+  // Live countdown to launch. The page is built ahead of time, so when the clock runs out
+  // it flips to "Out now" here; the nightly rebuild then makes that permanent.
+  document.querySelectorAll<HTMLElement>('[data-launch]').forEach((hero) => {
+    const launch = Date.parse(hero.dataset.launch!);
+    const box = hero.querySelector<HTMLElement>('[data-countdown]')!;
+    const cells = Object.fromEntries(
+      [...box.querySelectorAll<HTMLElement>('[data-unit]')].map((el) => [el.dataset.unit!, el]),
+    );
+    const tick = () => {
+      const left = launch - Date.now();
+      if (left <= 0) {
+        clearInterval(timer);
+        box.hidden = true;
+        hero.querySelector('[data-status]')!.textContent = 'Out now';
+        hero.querySelectorAll('[data-wishlist]').forEach((a) => (a.textContent = 'Buy on Steam'));
+        return;
+      }
+      const s = Math.floor(left / 1000);
+      const parts = { d: Math.floor(s / 86400), h: Math.floor(s / 3600) % 24, m: Math.floor(s / 60) % 60, s: s % 60 };
+      for (const [unit, value] of Object.entries(parts)) cells[unit].textContent = String(value).padStart(2, '0');
+      box.hidden = false;
+    };
+    const timer = setInterval(tick, 1000);
+    tick();
+  });
+</script>
 
 <style>
   .hero {
@@ -118,6 +167,42 @@ const status = game.upcoming
     box-shadow: 0 0 0 4px rgb(217 42 47 / 0.25);
     animation: pulse 2s infinite;
   }
+  .countdown {
+    display: flex;
+    gap: 10px;
+    margin: 4px 0 6px;
+  }
+  .countdown[hidden] {
+    display: none;
+  }
+  .countdown div {
+    display: grid;
+    justify-items: center;
+    min-width: 76px;
+    padding: 10px 8px 8px;
+    border: 1px solid var(--line);
+    border-top: 2px solid var(--crimson-hi);
+    background: rgb(11 9 8 / 0.6);
+    backdrop-filter: blur(6px);
+  }
+  .countdown span {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, #fff3d6, var(--gold-hi) 45%, var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .countdown small {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 0.64rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
   .tagline {
     margin: 0;
     font-family: var(--display);
@@ -158,6 +243,14 @@ const status = game.upcoming
   @media (max-width: 720px) {
     .hero {
       min-height: 92svh;
+    }
+    .countdown {
+      gap: 6px;
+    }
+    .countdown div {
+      min-width: 0;
+      flex: 1;
+      max-width: 76px;
     }
     .hero :global(.bg) {
       object-position: 60% 30%;

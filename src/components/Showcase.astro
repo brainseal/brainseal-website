@@ -1,0 +1,193 @@
+---
+import { Image } from 'astro:assets';
+import ReviewBadge from './ReviewBadge.astro';
+import { PLATFORMS, platformsOf, type Game } from '../lib/games';
+import { url } from '../lib/url';
+
+interface Props {
+  game: Game;
+  numeral: string;
+  flip?: boolean;
+}
+
+const { game, numeral, flip = false } = Astro.props;
+const platforms = platformsOf(game).map((p) => PLATFORMS[p]).join(' · ');
+---
+
+<section class:list={['band', { flip }]} style={`--accent: ${game.accent}`}>
+  <Image class="bg" src={game.hero} alt="" widths={[960, 1600, 2400]} sizes="100vw" />
+  <div class="wrap inner">
+    <div class="content" data-reveal>
+      <span class="numeral" aria-hidden="true">{numeral}</span>
+      <span class="eyebrow">{game.genres.slice(0, 2).join(' · ')}</span>
+      <h3 class="title">
+        {
+          game.logo ? (
+            <Image src={game.logo} alt={game.title} widths={[400, 600]} sizes="(max-width: 600px) 75vw, 440px" />
+          ) : (
+            game.title
+          )
+        }
+      </h3>
+      <p class="tagline">{game.tagline}</p>
+      <p class="summary">{game.summary}</p>
+      {game.review && <ReviewBadge review={game.review} />}
+      <p class="platforms">{platforms}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={url(`/games/${game.slug}/`)}>Enter the arena</a>
+        <a class="btn" href={url(`/games/${game.slug}/#trailer`)}>Watch trailer</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .band {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: min(88svh, 860px);
+    padding-block: clamp(72px, 10vw, 120px);
+    isolation: isolate;
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+  }
+  .band :global(.bg) {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
+    transform: scale(1.04);
+    transition: transform 1.2s ease-out;
+  }
+  .band:hover :global(.bg) {
+    transform: scale(1);
+  }
+  .band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgb(11 9 8 / 0.95) 0%, rgb(11 9 8 / 0.85) 40%, rgb(11 9 8 / 0.1) 75%),
+      linear-gradient(0deg, rgb(11 9 8 / 0.7), transparent 30%),
+      linear-gradient(180deg, rgb(11 9 8 / 0.7), transparent 25%);
+  }
+  .flip::before {
+    background:
+      linear-gradient(270deg, rgb(11 9 8 / 0.95) 0%, rgb(11 9 8 / 0.85) 40%, rgb(11 9 8 / 0.1) 75%),
+      linear-gradient(0deg, rgb(11 9 8 / 0.7), transparent 30%),
+      linear-gradient(180deg, rgb(11 9 8 / 0.7), transparent 25%);
+  }
+  .inner {
+    display: flex;
+  }
+  .flip .inner {
+    justify-content: flex-end;
+  }
+  .content {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: 14px;
+    max-width: 560px;
+  }
+  .numeral {
+    position: absolute;
+    top: -0.55em;
+    left: -0.08em;
+    z-index: -1;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(7rem, 16vw, 12rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(212 162 76 / 0.22);
+    pointer-events: none;
+  }
+  .eyebrow {
+    color: var(--accent);
+  }
+  .title {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #fff3d6, var(--gold-hi) 40%, var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 4px 24px rgb(0 0 0 / 0.7));
+  }
+  .title :global(img) {
+    width: min(440px, 75vw);
+    max-height: 200px;
+    object-fit: contain;
+    object-position: left center;
+  }
+  .tagline {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .summary {
+    margin: 0;
+    color: #d8cfc1;
+  }
+  .platforms {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .btn-row {
+    margin-top: 6px;
+  }
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+  }
+  [data-reveal].shown {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (max-width: 720px) {
+    .band {
+      align-items: flex-end;
+      min-height: 86svh;
+    }
+    .band::before,
+    .flip::before {
+      background: linear-gradient(0deg, var(--ink) 0%, rgb(11 9 8 / 0.82) 50%, rgb(11 9 8 / 0.2) 100%);
+    }
+    .flip .inner {
+      justify-content: flex-start;
+    }
+  }
+</style>
+
+<script>
+  // Fade each band's text in as it scrolls into view.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add('shown');
+        observer.unobserve(entry.target);
+      }
+    },
+    { threshold: 0.2 },
+  );
+  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+</script>

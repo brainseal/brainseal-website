@@ -1,23 +1,26 @@
 ---
 import { Image } from 'astro:assets';
 import seal from '../assets/brand/seal.png';
+import { studio } from '../lib/games';
 import { url } from '../lib/url';
 
 const links = [
   { href: url('/#games'), label: 'Games' },
-  { href: url('/about/'), label: 'About' },
-  { href: url('/#contact'), label: 'Contact', wide: true },
+  // `hide` drops a link from the bar on small (≤520px) or extra-small (≤400px) screens.
+  { href: url('/about/'), label: 'About', hide: 'xs' },
+  { href: url('/press/'), label: 'Press', hide: 'sm' },
 ];
 ---
 
 <header class="header" data-header>
   <div class="wrap bar">
-    <a class="brand" href={url('/')}aria-label="Brain Seal home">
+    <a class="brand" href={url('/')} aria-label={`${studio.name} home`}>
       <Image src={seal} alt="" width={44} height={44} loading="eager" />
-      <span class="wordmark">Brain Seal</span>
+      <span class="wordmark">Brain Seal<small>Entertainment</small></span>
     </a>
     <nav aria-label="Main">
-      {links.map((l) => <a href={l.href} class:list={{ wide: l.wide }}>{l.label}</a>)}
+      {links.map((l) => <a href={l.href} class:list={[l.hide && `hide-${l.hide}`]}>{l.label}</a>)}
+      <a class="discord" href={studio.discord} rel="noopener">Discord</a>
     </nav>
   </div>
 </header>
@@ -66,9 +69,11 @@ const links = [
     transform: rotate(-12deg) scale(1.05);
   }
   .wordmark {
+    display: grid;
     font-family: var(--display);
     font-weight: 900;
     font-size: 1.3rem;
+    line-height: 1.05;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     background: linear-gradient(180deg, var(--gold-hi), var(--gold));
@@ -76,9 +81,28 @@ const links = [
     background-clip: text;
     color: transparent;
   }
+  .wordmark small {
+    font-size: 0.5em;
+    font-weight: 700;
+    letter-spacing: 0.42em;
+  }
   nav {
     display: flex;
+    align-items: center;
     gap: clamp(16px, 3vw, 36px);
+  }
+  nav .discord {
+    padding: 8px 16px;
+    background: linear-gradient(180deg, var(--crimson-hi), var(--crimson));
+    color: #fff;
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  }
+  nav .discord::after {
+    display: none;
+  }
+  nav .discord:hover {
+    color: #fff;
+    filter: brightness(1.12);
   }
   nav a {
     position: relative;
@@ -117,13 +141,29 @@ const links = [
       height: 36px;
     }
     .wordmark {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+    nav {
+      gap: 14px;
     }
     nav a {
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
     }
-    nav .wide {
+    nav .discord {
+      padding: 6px 10px;
+    }
+    nav .hide-sm {
+      display: none;
+    }
+  }
+  @media (max-width: 400px) {
+    .wordmark small {
+      letter-spacing: 0.3em;
+    }
+    nav .hide-xs {
       display: none;
     }
   }

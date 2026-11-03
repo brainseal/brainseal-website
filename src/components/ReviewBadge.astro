@@ -1,0 +1,97 @@
+---
+import type { Review } from '../lib/steam';
+
+interface Props {
+  review: Review;
+  compact?: boolean;
+}
+
+const { review, compact = false } = Astro.props;
+const detail = `${review.percent}% of ${review.count.toLocaleString('en-GB')} Steam reviews`;
+---
+
+{
+  compact ? (
+    <span class="compact" title={detail}>
+      {review.label}
+    </span>
+  ) : (
+    <span class="badge">
+      <svg class="laurel" viewBox="0 0 20 40" aria-hidden="true">
+        <path d="M17 38C8 32 4 22 6 4" />
+        <ellipse cx="4" cy="10" rx="2" ry="4.5" transform="rotate(-20 4 10)" />
+        <ellipse cx="3.5" cy="19" rx="2" ry="4.5" transform="rotate(-35 3.5 19)" />
+        <ellipse cx="6" cy="27.5" rx="2" ry="4.5" transform="rotate(-55 6 27.5)" />
+        <ellipse cx="10.5" cy="34" rx="2" ry="4.5" transform="rotate(-70 10.5 34)" />
+        <ellipse cx="10" cy="13" rx="1.8" ry="4" transform="rotate(25 10 13)" />
+        <ellipse cx="11" cy="22" rx="1.8" ry="4" transform="rotate(10 11 22)" />
+      </svg>
+      <span class="text">
+        <strong>{review.label}</strong>
+        <small>{detail}</small>
+      </span>
+      <svg class="laurel flip" viewBox="0 0 20 40" aria-hidden="true">
+        <path d="M17 38C8 32 4 22 6 4" />
+        <ellipse cx="4" cy="10" rx="2" ry="4.5" transform="rotate(-20 4 10)" />
+        <ellipse cx="3.5" cy="19" rx="2" ry="4.5" transform="rotate(-35 3.5 19)" />
+        <ellipse cx="6" cy="27.5" rx="2" ry="4.5" transform="rotate(-55 6 27.5)" />
+        <ellipse cx="10.5" cy="34" rx="2" ry="4.5" transform="rotate(-70 10.5 34)" />
+        <ellipse cx="10" cy="13" rx="1.8" ry="4" transform="rotate(25 10 13)" />
+        <ellipse cx="11" cy="22" rx="1.8" ry="4" transform="rotate(10 11 22)" />
+      </svg>
+    </span>
+  )
+}
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--gold);
+  }
+  .laurel {
+    width: 18px;
+    height: 36px;
+    flex: none;
+    fill: currentColor;
+  }
+  .laurel path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+  }
+  .flip {
+    transform: scaleX(-1);
+  }
+  .text {
+    display: grid;
+    text-align: center;
+    line-height: 1.2;
+  }
+  strong {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-hi);
+  }
+  small {
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .compact {
+    display: inline-block;
+    margin-top: 6px;
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .compact::before {
+    content: '★ ';
+  }
+</style>

@@ -12,11 +12,12 @@ const year = new Date().getFullYear();
     <div class="call">
       <Image src={seal} alt="" width={96} height={96} class="seal" />
       <h2>Join the legion</h2>
-      <p>Business, press or publishing enquiries: we read everything.</p>
+      <p>Talk tactics with the community on Discord, or send word to the studio for business, press and publishing.</p>
       <div class="btn-row center">
+        <a class="btn btn-primary" href={studio.discord} rel="noopener">Join our Discord</a>
         <a class="btn btn-gold" href={`mailto:${studio.email}`}>{studio.email}</a>
       </div>
-      <ul class="socials" aria-label="Follow Brain Seal">
+      <ul class="socials" aria-label={`Follow ${studio.name}`}>
         {studio.socials.map((s) => (
           <li>
             <a href={s.url} rel="noopener">{s.name}</a>
@@ -25,9 +26,10 @@ const year = new Date().getFullYear();
       </ul>
     </div>
     <div class="legal">
-      <span>© {year} Brain Seal Ltd. All rights reserved.</span>
+      <span>© {year} {studio.name} ({studio.legalName}). All rights reserved.</span>
       <span>
-        Player support: <a href={`mailto:${studio.supportEmail}`}>{studio.supportEmail}</a> · <a href={url('/privacy-policy/')}>Privacy policy</a>
+        Player support: <a href={`mailto:${studio.supportEmail}`}>{studio.supportEmail}</a> · <a href={url('/press/')}>Press kit</a> ·
+        <a href={url('/privacy-policy/')}>Privacy policy</a>
       </span>
     </div>
   </div>

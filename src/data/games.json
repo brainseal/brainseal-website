@@ -4,6 +4,7 @@
     "title": "Dominus Gladiatus",
     "steamAppId": 3572090,
     "released": "2026-11-05",
+    "launchTime": "18:00",
     "genres": ["Strategy", "Management", "Auto-battler"],
     "tagline": "Rome thirsts for blood.",
     "summary": "A brutal gladiator management simulator. Recruit, train and equip gladiators and make life or death decisions throughout a deadly tournament against rival Domini.",
@@ -30,6 +31,7 @@
       "A turn based strategy adventure inspired by the legendary HeroQuest board game. Command up to 10 unique heroes, each with distinctive stats and powers, and train them in the Hero Camp to unlock new cards and abilities.",
       "Embark on 30 handcrafted quests filled with tactical, turn based combat, alone or with friends in local co-op for up to three players."
     ],
+    "showcase": true,
     "youtube": "sS10XHOZXSw",
     "accent": "#e2692c",
     "stores": {
@@ -51,6 +53,7 @@
       "Master seven unique bombs in a realistic physics simulation and explore over 70 levels of mayhem and destruction.",
       "With Steamworks integration you can play custom levels, or unleash your creativity in Creator Mode to build your own explosive puzzles."
     ],
+    "showcase": true,
     "youtube": "lpOc9duVdO4",
     "accent": "#f2b134",
     "stores": {
@@ -71,6 +74,7 @@
     "description": [
       "Unleash your strategic brilliance in this 2D side-scrolling strategy game, where you must build a base, manage resources, explore the mysterious forest and conquer your enemies."
     ],
+    "showcase": true,
     "youtube": "phLHrJOX2GM",
     "accent": "#4f8ad8",
     "stores": {
@@ -133,6 +137,7 @@
       "You are a common man who has lost everything in the wars with the Roman Empire. Your family is dead, your house has been burned down and your land is now under Roman rule.",
       "Fight waves of enemies in the arena to earn coin and fame until you are strong enough to enter the colosseum and become champion. Fate has finally revealed itself. Are you ready to accept it?"
     ],
+    "showcase": true,
     "youtube": "3I8e9BznhyM",
     "accent": "#c8873a",
     "stores": {
