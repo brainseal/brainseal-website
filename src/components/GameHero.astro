@@ -166,19 +166,31 @@ const units = [
   .art-logo {
     padding-bottom: clamp(32px, 4vw, 48px);
   }
-  .art-logo .content {
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    gap: 24px 48px;
+  /* Centred under the art's symmetrical composition, with one wide call to action. */
+  .art-logo .content,
+  .art-logo .lead,
+  .art-logo .actions {
+    justify-items: center;
+    text-align: center;
   }
   .art-logo .lead {
     gap: 12px;
   }
-  .art-logo .actions {
-    justify-items: end;
+  .art-logo .eyebrow::after {
+    content: '';
+    width: 2.2em;
+    height: 1px;
+    background: currentColor;
   }
   .art-logo .lead :global(.btn-row) {
+    justify-content: center;
+    width: 100%;
     margin-top: 6px;
+  }
+  .art-logo .lead :global(.btn) {
+    width: min(100%, 344px);
+    min-height: 58px;
+    font-size: 1rem;
   }
   .title {
     font-size: clamp(2.8rem, 8vw, 5.6rem);
@@ -309,11 +321,7 @@ const units = [
       display: none;
     }
     .art-logo .content {
-      grid-template-columns: 1fr;
       padding-top: 24px;
-    }
-    .art-logo .actions {
-      justify-items: start;
     }
     .countdown {
       gap: 6px;
