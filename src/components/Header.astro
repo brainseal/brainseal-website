@@ -6,9 +6,9 @@ import { url } from '../lib/url';
 
 const links = [
   { href: url('/#games'), label: 'Games' },
-  // `hide` drops a link from the bar on small (≤520px) or extra-small (≤400px) screens.
-  { href: url('/about/'), label: 'About', hide: 'xs' },
-  { href: url('/press/'), label: 'Press', hide: 'sm' },
+  { href: url('/about/'), label: 'About' },
+  // Dropped from the bar on phones (≤520px), where it doesn't fit; the footer links to it.
+  { href: url('/press/'), label: 'Press', hidePhone: true },
 ];
 ---
 
@@ -23,8 +23,7 @@ const links = [
       </span>
     </a>
     <nav aria-label="Main">
-      {links.map((l) => <a href={l.href} class:list={[l.hide && `hide-${l.hide}`]}>{l.label}</a>)}
-      <a class="discord" href={studio.discord} rel="noopener">Discord</a>
+      {links.map((l) => <a href={l.href} class:list={{ 'hide-phone': l.hidePhone }}>{l.label}</a>)}
     </nav>
   </div>
 </header>
@@ -102,19 +101,6 @@ const links = [
     align-items: center;
     gap: clamp(16px, 3vw, 36px);
   }
-  nav .discord {
-    padding: 8px 16px;
-    background: linear-gradient(180deg, var(--crimson-hi), var(--crimson));
-    color: #fff;
-    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
-  }
-  nav .discord::after {
-    display: none;
-  }
-  nav .discord:hover {
-    color: #fff;
-    filter: brightness(1.12);
-  }
   nav a {
     position: relative;
     font-family: var(--display);
@@ -163,15 +149,7 @@ const links = [
       font-size: 0.72rem;
       letter-spacing: 0.1em;
     }
-    nav .discord {
-      padding: 6px 10px;
-    }
-    nav .hide-sm {
-      display: none;
-    }
-  }
-  @media (max-width: 400px) {
-    nav .hide-xs {
+    nav .hide-phone {
       display: none;
     }
   }
