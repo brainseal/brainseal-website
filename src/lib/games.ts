@@ -86,13 +86,12 @@ export const studio = {
   legalName: 'Brain Seal Ltd',
   location: 'London, United Kingdom',
   founded: 2007,
-  // The oldest game (games are sorted newest first).
-  firstGame: games[games.length - 1],
-  platforms: new Set(games.flatMap(platformsOf)).size,
+  // Everywhere the studio has released games, past and present (wider than today's store links).
+  platformNames: ['PC', 'PlayStation', 'Xbox', 'Nintendo Switch', 'iOS', 'Android'],
   email: 'info@brainseal.com',
   supportEmail: 'support@brainseal.com',
   discord: 'https://discord.com/invite/H5tye5aMAM',
-  // Footer links under the Discord and email buttons (Discord has its own button, so it isn't listed).
+  // Footer social links (Discord has its own button in the top bar, so it isn't listed).
   socials: [
     { name: 'YouTube', icon: 'youtube', url: 'https://www.youtube.com/brainseal' },
     { name: 'X', icon: 'x', url: 'https://x.com/brainseal' },

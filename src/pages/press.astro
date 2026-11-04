@@ -11,9 +11,8 @@ const facts = [
   { label: 'Company', value: studio.legalName },
   { label: 'Based in', value: studio.location },
   { label: 'Founded', value: `${studio.founded}` },
-  { label: 'First release', value: `${studio.firstGame.title}, ${studio.firstGame.year}` },
   { label: 'Games', value: `${games.length}` },
-  { label: 'Platforms', value: Object.values(PLATFORMS).join(', ') },
+  { label: 'Platforms', value: studio.platformNames.join(', ') },
   ...(totalReviews > 0 ? [{ label: 'Steam reviews', value: totalReviews.toLocaleString('en-GB') }] : []),
 ];
 
@@ -39,9 +38,8 @@ const downloads = (game: (typeof games)[number]) => [
         <h2>The studio</h2>
         <p>
           {studio.name} is an independent video game developer and publisher based in London.{' '}
-          {`Since ${studio.firstGame.title} in ${studio.firstGame.year}`}, the studio has released {games.filter((g) => !g.upcoming).length} games across
-          {' '}{Object.values(PLATFORMS).slice(0, -1).join(', ')} and {Object.values(PLATFORMS).at(-1)}, from the HeroQuest-inspired Dark
-          Quest saga to gladiator epics, strategy and physics games.
+          {`Founded in ${studio.founded}, the studio has released games across ${studio.platformNames.slice(0, -1).join(', ')} and ${studio.platformNames.at(-1)}, `}
+          from the HeroQuest-inspired Dark Quest saga to gladiator epics, strategy and physics games.
         </p>
         <p>For interviews, review copies or anything else, email <a href={`mailto:${studio.email}`}>{studio.email}</a>.</p>
         <div class="logo-card">

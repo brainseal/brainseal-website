@@ -17,7 +17,8 @@ interface Props {
 
 const {
   title,
-  description = 'Brain Seal Entertainment is an independent video game developer and publisher from London. Makers of Dominus Gladiatus, Dark Quest, Monarchy, Blow it up and Story of a Gladiator.',
+  // Kept under ~155 characters so Google shows it whole (the page title already names the studio).
+  description = 'Independent video game developer and publisher from London. Makers of Dominus Gladiatus, Dark Quest, Monarchy, Blow it up and Story of a Gladiator.',
   image = featured.hero,
   jsonLd,
 } = Astro.props;
