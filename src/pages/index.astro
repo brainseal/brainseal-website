@@ -13,26 +13,45 @@ import { games, featured, studio } from '../lib/games';
 // The featured game is chapter I; showcased games follow in release order.
 const NUMERALS = ['II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 const showcase = games.filter((g) => g.showcase && g !== featured);
+
+// Before launch the hero sells one thing (countdown + wishlist), left-aligned with the pitch beside
+// the trailer below. Once the featured game is out, the hero matches its game page (tagline,
+// summary and every store), so the section below drops the repeats and keeps trailer + screenshots.
+const released = !featured.upcoming;
 ---
 
 <Base>
   <h1 class="visually-hidden">{studio.name}: video game developer and publisher</h1>
-  <GameHero game={featured} heading="h2" eyebrow={featured.upcoming ? 'New from Brain Seal' : 'Latest from Brain Seal'} />
+  {
+    released ? (
+      <GameHero game={featured} heading="h2" eyebrow="Available Now!" tiles />
+    ) : (
+      <GameHero game={featured} heading="h2" eyebrow="New from Brain Seal" launchedEyebrow="Available Now!" />
+    )
+  }
 
   <section class="section featured" style={`--accent: ${featured.accent}`} aria-label={featured.title}>
     <div class="wrap">
-      <div class="feature">
+      <div class:list={['feature', { solo: released }]}>
         <Trailer id={featured.youtube} title={featured.title} poster={featured.shots[0] ?? featured.hero} />
-        <div class="pitch">
-          <h2>{featured.tagline}</h2>
-          {featured.description.map((p) => <p>{p}</p>)}
-        </div>
+        {
+          !released && (
+            <div class="pitch">
+              <h2>{featured.tagline}</h2>
+              {featured.description.map((p) => <p>{p}</p>)}
+            </div>
+          )
+        }
       </div>
       {featured.logline && <p class="logline">{featured.logline}</p>}
       {featured.shots.length > 0 && <Screenshots game={featured} row />}
-      <div class="platforms">
-        <PlatformLinks game={featured} />
-      </div>
+      {
+        !released && (
+          <div class="platforms">
+            <PlatformLinks game={featured} />
+          </div>
+        )
+      }
     </div>
   </section>
 
@@ -87,6 +106,12 @@ const showcase = games.filter((g) => g.showcase && g !== featured);
     gap: clamp(24px, 4vw, 56px);
     align-items: center;
     margin-bottom: clamp(16px, 2.5vw, 28px);
+  }
+  /* Trailer on its own, same width as on the game pages */
+  .feature.solo {
+    grid-template-columns: 1fr;
+    max-width: 1180px;
+    margin-inline: auto;
   }
   .pitch {
     display: grid;
