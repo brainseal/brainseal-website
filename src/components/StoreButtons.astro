@@ -21,7 +21,7 @@ const platforms = platformsOf(game)
         href={game.stores[p]}
         rel="noopener"
         data-wishlist={p === 'steam' && game.upcoming ? '' : undefined}>
-        {p === 'steam' && game.upcoming ? 'Wishlist on Steam' : PLATFORMS[p]}
+        {p === 'steam' ? (game.upcoming ? 'Wishlist on Steam' : 'Buy on Steam') : PLATFORMS[p]}
       </a>
     ))
   }

@@ -22,7 +22,7 @@ const { game, eyebrow, heading: Heading = 'h1', link = false, tiles = false, lau
 const showStatus = game.upcoming || !tiles;
 const status = game.upcoming
   ? `Launches ${formatDate(game.releaseDate)}`
-  : `Out now · Released ${game.year}`;
+  : `Out now · Released ${game.releasedLabel}`;
 const countdown = game.upcoming && game.hasLaunchTime;
 const units = [
   ['d', 'Days'],
